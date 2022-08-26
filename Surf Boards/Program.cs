@@ -1,7 +1,11 @@
+using Surf_Boards.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<SurfBoardDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("MvcSurfBoardConnectionString")));
 
 var app = builder.Build();
 
