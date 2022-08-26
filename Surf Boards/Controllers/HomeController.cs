@@ -1,21 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Surf_Boards.Models;
 using System.Diagnostics;
+using Surf_Boards.Data;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace Surf_Boards.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly Surf_BoardsContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(Surf_BoardsContext context)
         {
-            _logger = logger;
+            _context = context;
         }
 
-        public IActionResult Index()
+        // GET: SurfBoards
+
+
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var surfBoard = await _context.SurfBoard.ToListAsync();
+            return View(surfBoard);
         }
 
         public IActionResult Privacy()

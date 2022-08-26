@@ -1,8 +1,35 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model List<Surf_Boards.Models.SurfBoard>
+@{
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+}
+<h1>Surfboards </h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>BoardName </th>
+            <th>Length </th>
+            <th>Width</th>
+            <th>Thickness</th>
+            <th>Volume</th>
+            <th>Boardtype</th>
+            <th>Price</th>
+            <th>Equipment</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var surfBoard in Model)
+        {
+            <tr>
+                <td>@surfBoard.BoardName</td>
+                <td>@surfBoard.Length</td>
+                <td>@surfBoard.Width</td>
+                <td>@surfBoard.Thickness</td>
+                <td>@surfBoard.Volume</td>
+                <td>@surfBoard.Boardtype</td>
+                <td>@surfBoard.Price</td>
+                <td>@surfBoard.Equipment</td>
+            </tr>
+        }
+    </tbody>
+</table>
