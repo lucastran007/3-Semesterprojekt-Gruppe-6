@@ -3,7 +3,6 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Surf_Boards.Data;
 
@@ -11,11 +10,10 @@ using Surf_Boards.Data;
 
 namespace Surf_Boards.Migrations
 {
-    [DbContext(typeof(SurfBoardDbContext))]
-    [Migration("20220826092052_Initial Migration")]
-    partial class InitialMigration
+    [DbContext(typeof(Surf_BoardsContext))]
+    partial class Surf_BoardsContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,15 +29,12 @@ namespace Surf_Boards.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("BoardName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Boardtype")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Equipment")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Length")
@@ -59,7 +54,7 @@ namespace Surf_Boards.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SurfBoards");
+                    b.ToTable("SurfBoard");
                 });
 #pragma warning restore 612, 618
         }

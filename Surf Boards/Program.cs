@@ -8,7 +8,7 @@ builder.Services.AddDbContext<Surf_BoardsContext>(options =>
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<SurfBoardDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("MvcSurfBoardConnectionString")));
+//builder.Services.AddDbContext<SurfBoardDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("MvcSurfBoardConnectionString")));
 
 var app = builder.Build();
 

@@ -10,29 +10,29 @@ namespace Surf_Boards.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "SurfBoards",
+                name: "SurfBoard",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BoardName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BoardName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Length = table.Column<double>(type: "float", nullable: false),
                     Width = table.Column<double>(type: "float", nullable: false),
                     Thickness = table.Column<double>(type: "float", nullable: false),
                     Volume = table.Column<double>(type: "float", nullable: false),
-                    Boardtype = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Boardtype = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<double>(type: "float", nullable: false),
-                    Equipment = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Equipment = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SurfBoards", x => x.Id);
+                    table.PrimaryKey("PK_SurfBoard", x => x.Id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "SurfBoards");
+                name: "SurfBoard");
         }
     }
 }
