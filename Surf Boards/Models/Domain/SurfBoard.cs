@@ -11,9 +11,6 @@
         public string Boardtype { get; set; }
         public double Price { get; set; }
         public string Equipment { get; set; }
-        public SurfBoard()
-        {
-
-        }
+        
     }
 }
