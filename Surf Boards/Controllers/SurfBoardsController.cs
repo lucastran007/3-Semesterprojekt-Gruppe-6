@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Surf_Boards.Data;
 using Surf_Boards.Models;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Surf_Boards.Controllers
 {
     public class SurfBoardsController : Controller
     {
         private readonly Surf_BoardsContext _context;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public SurfBoardsController(Surf_BoardsContext context)
+        public SurfBoardsController(Surf_BoardsContext context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
+            this._hostEnvironment = hostEnvironment;
         }
 
         // GET: SurfBoards
@@ -54,10 +57,25 @@ namespace Surf_Boards.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,BoardName,Length,Width,Thickness,Volume,Boardtype,Price,Equipment")] SurfBoard surfBoard)
+        public async Task<IActionResult> Create([Bind("Id,BoardName,Length,Width,Thickness,Volume,Boardtype,Price,Equipment,ImageFile")] SurfBoard surfBoard)
         {
             if (ModelState.IsValid)
             {
+               
+
+                string wwwRootPath = _hostEnvironment.WebRootPath;
+                string filename = Path.GetFileNameWithoutExtension(surfBoard.ImageFile.FileName);
+                string extension = Path.GetExtension(surfBoard.ImageFile.FileName);
+                surfBoard.ImageName = filename = filename+ extension;
+                string path = Path.Combine(wwwRootPath + "/Images/", filename);
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    await surfBoard.ImageFile.CopyToAsync(fileStream);
+                }
+              
+                
+
+
                 surfBoard.Id = Guid.NewGuid();
                 _context.Add(surfBoard);
                 await _context.SaveChangesAsync();
@@ -87,7 +105,7 @@ namespace Surf_Boards.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,BoardName,Length,Width,Thickness,Volume,Boardtype,Price,Equipment")] SurfBoard surfBoard)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,BoardName,Length,Width,Thickness,Volume,Boardtype,Price,Equipment,ImageFile")] SurfBoard surfBoard)
         {
             if (id != surfBoard.Id)
             {
@@ -98,6 +116,15 @@ namespace Surf_Boards.Controllers
             {
                 try
                 {
+                    string wwwRootPath = _hostEnvironment.WebRootPath;
+                    string filename = Path.GetFileNameWithoutExtension(surfBoard.ImageFile.FileName);
+                    string extension = Path.GetExtension(surfBoard.ImageFile.FileName);
+                    surfBoard.ImageName = filename = filename + extension;
+                    string path = Path.Combine(wwwRootPath + "/Images/", filename);
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await surfBoard.ImageFile.CopyToAsync(fileStream);
+                    }
                     _context.Update(surfBoard);
                     await _context.SaveChangesAsync();
                 }
@@ -147,6 +174,12 @@ namespace Surf_Boards.Controllers
             var surfBoard = await _context.SurfBoard.FindAsync(id);
             if (surfBoard != null)
             {
+                if (surfBoard.ImageName != null)
+                {
+                var imagePath = Path.Combine(_hostEnvironment.WebRootPath, "Images", surfBoard.ImageName);
+                if(System.IO.File.Exists(imagePath))
+                    System.IO.File.Delete(imagePath);
+                }
                 _context.SurfBoard.Remove(surfBoard);
             }
             

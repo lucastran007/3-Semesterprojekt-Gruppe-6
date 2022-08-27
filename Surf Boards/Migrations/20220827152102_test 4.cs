@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Surf_Boards.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class test4 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -21,7 +21,8 @@ namespace Surf_Boards.Migrations
                     Volume = table.Column<double>(type: "float", nullable: false),
                     Boardtype = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<double>(type: "float", nullable: false),
-                    Equipment = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Equipment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageName = table.Column<string>(type: "nvarchar (100)", nullable: true)
                 },
                 constraints: table =>
                 {

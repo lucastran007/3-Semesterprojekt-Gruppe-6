@@ -37,6 +37,9 @@ namespace Surf_Boards.Migrations
                     b.Property<string>("Equipment")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImageName")
+                        .HasColumnType("nvarchar (100)");
+
                     b.Property<double>("Length")
                         .HasColumnType("float");
 

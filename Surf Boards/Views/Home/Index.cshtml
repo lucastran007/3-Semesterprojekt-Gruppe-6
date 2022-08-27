@@ -15,6 +15,7 @@
             <th>Boardtype</th>
             <th>Price</th>
             <th>Equipment</th>
+            <th>Billede</th>
         </tr>
     </thead>
     <tbody>
@@ -29,6 +30,7 @@
                 <td>@surfBoard.Boardtype</td>
                 <td>@surfBoard.Price</td>
                 <td>@surfBoard.Equipment</td>
+                <td><img src="@("~/Images/"+surfBoard.ImageName)" asp-append-version="true" width="25px" height="25px" /></td>
             </tr>
         }
     </tbody>

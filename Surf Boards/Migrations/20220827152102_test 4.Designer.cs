@@ -12,8 +12,8 @@ using Surf_Boards.Data;
 namespace Surf_Boards.Migrations
 {
     [DbContext(typeof(Surf_BoardsContext))]
-    [Migration("20220826100223_Initial Migration")]
-    partial class InitialMigration
+    [Migration("20220827152102_test 4")]
+    partial class test4
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,6 +38,9 @@ namespace Surf_Boards.Migrations
 
                     b.Property<string>("Equipment")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageName")
+                        .HasColumnType("nvarchar (100)");
 
                     b.Property<double>("Length")
                         .HasColumnType("float");
