@@ -70,7 +70,7 @@ namespace Surf_Boards.Controllers
                     string wwwRootPath = _hostEnvironment.WebRootPath;
                     string filename = Path.GetFileNameWithoutExtension(surfBoard.ImageFile.FileName);
                     string extension = Path.GetExtension(surfBoard.ImageFile.FileName);
-                    surfBoard.ImageName = filename = filename + "-" + surfBoard.Id + extension;
+                    surfBoard.ImageName = filename = filename + "-" + surfBoard.Id +  extension;
                     string path = Path.Combine(wwwRootPath + "/Images/", filename);
                     using (var fileStream = new FileStream(path, FileMode.Create))
                     {
@@ -116,33 +116,35 @@ namespace Surf_Boards.Controllers
 
             if (ModelState.IsValid)
             {
+
                 try
                 {
-                    
+
                     if (surfBoard.ImageFile != null)
                     {
-                        string wwwRootPath = _hostEnvironment.WebRootPath;
-                      ;
-                        if (surfBoard.ImageName != null)
+                        var ip = await _context.SurfBoard.FindAsync(id);
+                        string imagePathe = _hostEnvironment.WebRootPath;
+                        if (ip.ImageName != null)
                         {
-                            var imagePath = Path.Combine(wwwRootPath + "/Images/", surfBoard.ImageName);
+                            var imagePath = Path.Combine(imagePathe + "/Images/", ip.ImageName);
                             if (System.IO.File.Exists(imagePath))
-                            {
                                 System.IO.File.Delete(imagePath);
+                            _context.ChangeTracker.Clear();
+                            await _context.SaveChangesAsync();
 
-                            }
                         }
-                       
+
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
                         string filename = Path.GetFileNameWithoutExtension(surfBoard.ImageFile.FileName);
                         string extension = Path.GetExtension(surfBoard.ImageFile.FileName);
-                        surfBoard.ImageName = filename = filename  + surfBoard.Id + extension;
+                        surfBoard.ImageName = filename = filename + "-" + surfBoard.Id + extension;
                         string path = Path.Combine(wwwRootPath + "/Images/", filename);
                         using (var fileStream = new FileStream(path, FileMode.Create))
                         {
                             await surfBoard.ImageFile.CopyToAsync(fileStream);
                         }
                     }
-                    
+
                     _context.Update(surfBoard);
                     await _context.SaveChangesAsync();
                 }
