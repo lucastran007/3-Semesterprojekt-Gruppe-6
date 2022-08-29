@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Surf_Boards.Data;
 using Surf_Boards.Models;
 using Microsoft.AspNetCore.Hosting;
+using System.Diagnostics;
 
 namespace Surf_Boards.Controllers
 {
@@ -25,7 +26,7 @@ namespace Surf_Boards.Controllers
         // GET: SurfBoards
         public async Task<IActionResult> Index()
         {
-              return View(await _context.SurfBoard.ToListAsync());
+            return View(await _context.SurfBoard.ToListAsync());
         }
 
         // GET: SurfBoards/Details/5
@@ -61,22 +62,23 @@ namespace Surf_Boards.Controllers
         {
             if (ModelState.IsValid)
             {
-               
-
-                string wwwRootPath = _hostEnvironment.WebRootPath;
-                string filename = Path.GetFileNameWithoutExtension(surfBoard.ImageFile.FileName);
-                string extension = Path.GetExtension(surfBoard.ImageFile.FileName);
-                surfBoard.ImageName = filename = filename+ extension;
-                string path = Path.Combine(wwwRootPath + "/Images/", filename);
-                using (var fileStream = new FileStream(path, FileMode.Create))
-                {
-                    await surfBoard.ImageFile.CopyToAsync(fileStream);
-                }
-              
-                
 
 
                 surfBoard.Id = Guid.NewGuid();
+                if (surfBoard.ImageFile != null)
+                {
+                    string wwwRootPath = _hostEnvironment.WebRootPath;
+                    string filename = Path.GetFileNameWithoutExtension(surfBoard.ImageFile.FileName);
+                    string extension = Path.GetExtension(surfBoard.ImageFile.FileName);
+                    surfBoard.ImageName = filename = filename + "-" + surfBoard.Id + extension;
+                    string path = Path.Combine(wwwRootPath + "/Images/", filename);
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await surfBoard.ImageFile.CopyToAsync(fileStream);
+                    }
+
+                }
+
                 _context.Add(surfBoard);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -116,15 +118,31 @@ namespace Surf_Boards.Controllers
             {
                 try
                 {
-                    string wwwRootPath = _hostEnvironment.WebRootPath;
-                    string filename = Path.GetFileNameWithoutExtension(surfBoard.ImageFile.FileName);
-                    string extension = Path.GetExtension(surfBoard.ImageFile.FileName);
-                    surfBoard.ImageName = filename = filename + extension;
-                    string path = Path.Combine(wwwRootPath + "/Images/", filename);
-                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    
+                    if (surfBoard.ImageFile != null)
                     {
-                        await surfBoard.ImageFile.CopyToAsync(fileStream);
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                      ;
+                        if (surfBoard.ImageName != null)
+                        {
+                            var imagePath = Path.Combine(wwwRootPath + "/Images/", surfBoard.ImageName);
+                            if (System.IO.File.Exists(imagePath))
+                            {
+                                System.IO.File.Delete(imagePath);
+
+                            }
+                        }
+                       
+                        string filename = Path.GetFileNameWithoutExtension(surfBoard.ImageFile.FileName);
+                        string extension = Path.GetExtension(surfBoard.ImageFile.FileName);
+                        surfBoard.ImageName = filename = filename  + surfBoard.Id + extension;
+                        string path = Path.Combine(wwwRootPath + "/Images/", filename);
+                        using (var fileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await surfBoard.ImageFile.CopyToAsync(fileStream);
+                        }
                     }
+                    
                     _context.Update(surfBoard);
                     await _context.SaveChangesAsync();
                 }
@@ -176,20 +194,20 @@ namespace Surf_Boards.Controllers
             {
                 if (surfBoard.ImageName != null)
                 {
-                var imagePath = Path.Combine(_hostEnvironment.WebRootPath, "Images", surfBoard.ImageName);
-                if(System.IO.File.Exists(imagePath))
-                    System.IO.File.Delete(imagePath);
+                    var imagePath = Path.Combine(_hostEnvironment.WebRootPath, "Images", surfBoard.ImageName);
+                    if (System.IO.File.Exists(imagePath))
+                        System.IO.File.Delete(imagePath);
                 }
                 _context.SurfBoard.Remove(surfBoard);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool SurfBoardExists(Guid id)
         {
-          return _context.SurfBoard.Any(e => e.Id == id);
+            return _context.SurfBoard.Any(e => e.Id == id);
         }
     }
 }
