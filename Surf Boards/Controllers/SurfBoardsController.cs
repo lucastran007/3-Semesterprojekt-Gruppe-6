@@ -107,7 +107,7 @@ namespace Surf_Boards.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,BoardName,Length,Width,Thickness,Volume,Boardtype,Price,Equipment,ImageFile")] SurfBoard surfBoard)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,BoardName,Length,Width,Thickness,Volume,Boardtype,Price,Equipment,ImageName,ImageFile")] SurfBoard surfBoard)
         {
             if (id != surfBoard.Id)
             {
@@ -120,18 +120,22 @@ namespace Surf_Boards.Controllers
                 try
                 {
 
-                    if (surfBoard.ImageFile != null)
+                    if (surfBoard.ImageFile != null && surfBoard.ImageFile.Length >0)
                     {
                         var ip = await _context.SurfBoard.FindAsync(id);
-                        string imagePathe = _hostEnvironment.WebRootPath;
-                        if (ip.ImageName != null)
+                        if (ip.ImageName != null && surfBoard.ImageFile != null)
                         {
+                        string imagePathe = _hostEnvironment.WebRootPath;
                             var imagePath = Path.Combine(imagePathe + "/Images/", ip.ImageName);
                             if (System.IO.File.Exists(imagePath))
                                 System.IO.File.Delete(imagePath);
                             _context.ChangeTracker.Clear();
                             await _context.SaveChangesAsync();
 
+                        }
+                        else
+                        {
+                            _context.ChangeTracker.Clear();
                         }
 
                         string wwwRootPath = _hostEnvironment.WebRootPath;
