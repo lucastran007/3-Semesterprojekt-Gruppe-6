@@ -1,36 +1,85 @@
-﻿@model List<Surf_Boards.Models.SurfBoard>
-@{
+﻿@model IEnumerable<Surf_Boards.Models.SurfBoard>
 
+@{
+    ViewData["Title"] = "Index";
 }
-<h1>Surfboards </h1>
+
+<h1>Index</h1>
+
+<form asp-action="Index" method="get">
+    <div class="form-group">
+        <label for="SearchingString">Search by partial title:</label>
+        <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+        <input type="submit" value="Search" class="btn btn-primary" />
+    </div>  
+</form>
+<a asp-action="Index"> Back to full list</a>
+
 
 <table class="table">
     <thead>
         <tr>
-            <th>BoardName </th>
-            <th>Length </th>
-            <th>Width</th>
-            <th>Thickness</th>
-            <th>Volume</th>
-            <th>Boardtype</th>
-            <th>Price</th>
-            <th>Equipment</th>
-            <th>Billede</th>
+            <th>
+                @Html.DisplayNameFor(model => model.BoardName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Length)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Width)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Thickness)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Volume)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Boardtype)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Equipment)
+            </th>
+            <th>
+                Billede
+            </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var surfBoard in Model)
+        @foreach (var item in Model)
         {
             <tr>
-                <td>@surfBoard.BoardName</td>
-                <td>@surfBoard.Length</td>
-                <td>@surfBoard.Width</td>
-                <td>@surfBoard.Thickness</td>
-                <td>@surfBoard.Volume</td>
-                <td>@surfBoard.Boardtype</td>
-                <td>@surfBoard.Price</td>
-                <td>@surfBoard.Equipment</td>
-                <td><img src="@("~/Images/"+surfBoard.ImageName)" asp-append-version="true" width="25px" height="25px" /></td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BoardName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Length)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Width)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Thickness)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Volume)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Boardtype)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Equipment)
+                </td>
+                <td>
+                    <img src="@("~/Images/"+item.ImageName)" asp-append-version="true" width="25px" height="25px" />
+                </td>
             </tr>
         }
     </tbody>

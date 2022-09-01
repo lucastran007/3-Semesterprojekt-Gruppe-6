@@ -19,9 +19,17 @@ namespace Surf_Boards.Controllers
         // GET: SurfBoards
 
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string SearchString)
         {
-            var surfBoard = await _context.SurfBoard.ToListAsync();
+            ViewData["CurrentFilter"] = SearchString;
+            var surfBoard = from s in _context.SurfBoard
+                            select s;
+
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                surfBoard = surfBoard.Where(s => s.BoardName.Contains(SearchString));
+            }
+
             return View(surfBoard);
         }
 
