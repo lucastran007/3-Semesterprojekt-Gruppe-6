@@ -19,26 +19,28 @@
 <table class="table">
     <thead>
         <tr>
+
             <th>
-                @Html.DisplayNameFor(model => model.BoardName)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSort"]">@Html.DisplayNameFor(model => model.BoardName)</a>
+            </th>
+
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["LengthSort"]">@Html.DisplayNameFor(model => model.Length)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Length)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["WidthSort"]">@Html.DisplayNameFor(model => model.Width)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Width)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["ThicknessSort"]">@Html.DisplayNameFor(model => model.Thickness)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Thickness)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["VolumeSort"]">@Html.DisplayNameFor(model => model.Volume)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Volume)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["BoardTypeSort"]">@Html.DisplayNameFor(model => model.Boardtype)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Boardtype)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["PriceSort"]">@Html.DisplayNameFor(model => model.Price)</a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Equipment)
