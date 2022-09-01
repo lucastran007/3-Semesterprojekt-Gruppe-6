@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Surf_Boards.Models.SurfBoard>
+﻿@model PaginatedList<Surf_Boards.Models.SurfBoard>
 @{
     ViewData["Title"] = "Index";
 }
@@ -18,37 +18,31 @@
 <table class="table">
     <thead>
         <tr>
-             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["BoardSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">@Html.DisplayNameFor(model => model.BoardName)</a>
-            </th>
-         
-             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["BoardTypeSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">BoardType</a>
-            </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSort"]">@Html.DisplayNameFor(model => model.BoardName)</a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Board Name</a>
             </th>
 
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["LengthSort"]">@Html.DisplayNameFor(model => model.Length)</a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["LengthSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Length</a>
+            </th>
+
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["WidthSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Width</a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["WidthSort"]">@Html.DisplayNameFor(model => model.Width)</a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["ThicknessSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Thickness</a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["ThicknessSort"]">@Html.DisplayNameFor(model => model.Thickness)</a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["VolumeSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Volume</a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["VolumeSort"]">@Html.DisplayNameFor(model => model.Volume)</a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["BoardTypeSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Board Type</a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["BoardTypeSort"]">@Html.DisplayNameFor(model => model.Boardtype)</a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["PriceSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Price</a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["PriceSort"]">@Html.DisplayNameFor(model => model.Price)</a>
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Equipment)
+               Equipment
             </th>
             <th>
                 Billede

@@ -3,7 +3,6 @@ using Surf_Boards.Models;
 using System.Diagnostics;
 using Surf_Boards.Data;
 using Microsoft.EntityFrameworkCore;
-using Surf_Boards.Models.Domain;
 
 namespace Surf_Boards.Controllers
 {
@@ -90,7 +89,7 @@ namespace Surf_Boards.Controllers
                     surfBoard=surfBoard.OrderBy(s => s.BoardName);
                     break;
             }
-            int pageSize = 3;
+            int pageSize = 10;
             return View(await PaginatedList<SurfBoard>.CreateAsync(surfBoard.AsNoTracking(), pageNumber?? 1, pageSize));
         }
 

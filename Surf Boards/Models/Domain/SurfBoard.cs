@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Surf_Boards.Paging;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
