@@ -122,11 +122,11 @@ namespace Surf_Boards.Controllers
 
                     if (surfBoard.ImageFile != null && surfBoard.ImageFile.Length >0)
                     {
-                        var ip = await _context.SurfBoard.FindAsync(id);
-                        if (ip.ImageName != null && surfBoard.ImageFile != null)
+                       
+                        if (surfBoard.ImageName != null && surfBoard.ImageFile != null)
                         {
                         string imagePathe = _hostEnvironment.WebRootPath;
-                            var imagePath = Path.Combine(imagePathe + "/Images/", ip.ImageName);
+                            var imagePath = Path.Combine(imagePathe + "/Images/", surfBoard.ImageName);
                             if (System.IO.File.Exists(imagePath))
                                 System.IO.File.Delete(imagePath);
                             _context.ChangeTracker.Clear();
