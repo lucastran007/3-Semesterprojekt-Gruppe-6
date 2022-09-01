@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="Paging\" />
     <Folder Include="Views\SurfBoard\" />
     <Folder Include="wwwroot\Images\" />
   </ItemGroup>

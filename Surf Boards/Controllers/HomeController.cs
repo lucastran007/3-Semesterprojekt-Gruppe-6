@@ -3,7 +3,7 @@ using Surf_Boards.Models;
 using System.Diagnostics;
 using Surf_Boards.Data;
 using Microsoft.EntityFrameworkCore;
-
+using Surf_Boards.Models.Domain;
 
 namespace Surf_Boards.Controllers
 {
@@ -21,6 +21,7 @@ namespace Surf_Boards.Controllers
 
         public async Task<IActionResult> Index(string SearchString, string sortOrder, string currentFilter, int? pageNumber)
         {
+            ViewData["CurrentSort"]=sortOrder;
             ViewData["CurrentFilter"] = SearchString;
             ViewData["NameSort"] = String.IsNullOrEmpty(sortOrder) ? "BoardName_desc" : "";
             ViewData["LengthSort"] = sortOrder == "Length" ? "Length_desc" : "Length";
@@ -29,6 +30,14 @@ namespace Surf_Boards.Controllers
             ViewData["VolumeSort"] = sortOrder == "Volume" ? "Volume_desc" : "Volume";
             ViewData["PriceSort"] = sortOrder == "Price" ? "Price_desc" : "Price";
             ViewData["BoardTypeSort"] = sortOrder == "BoardType" ? "BoardType_desc" : "BoardType";
+            if (SearchString !=null)
+            {
+                pageNumber =1;
+            }
+            else
+            {
+                SearchString=currentFilter;
+            }
             var surfBoard = from s in _context.SurfBoard
                             select s;
 
@@ -81,8 +90,8 @@ namespace Surf_Boards.Controllers
                     surfBoard=surfBoard.OrderBy(s => s.BoardName);
                     break;
             }
-
-            return View(await surfBoard.AsNoTracking().ToListAsync());
+            int pageSize = 3;
+            return View(await PaginatedList<SurfBoard>.CreateAsync(surfBoard.AsNoTracking(), pageNumber?? 1, pageSize));
         }
 
         public IActionResult Privacy()
