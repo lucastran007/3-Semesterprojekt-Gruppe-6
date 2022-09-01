@@ -19,7 +19,7 @@ namespace Surf_Boards.Controllers
         // GET: SurfBoards
 
 
-        public async Task<IActionResult> Index(string SearchString, string sortOrder)
+        public async Task<IActionResult> Index(string SearchString, string sortOrder, string currentFilter, int? pageNumber)
         {
             ViewData["CurrentFilter"] = SearchString;
             ViewData["NameSort"] = String.IsNullOrEmpty(sortOrder) ? "BoardName_desc" : "";
