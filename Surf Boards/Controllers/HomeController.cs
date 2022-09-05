@@ -20,22 +20,16 @@ namespace Surf_Boards.Controllers
 
         public async Task<IActionResult> Index(string SearchString, string sortOrder, string currentFilter, int? pageNumber)
         {
-            ViewData["CurrentSort"]=sortOrder;
+           
+            //Searchning 
             ViewData["CurrentFilter"] = SearchString;
-            ViewData["NameSort"] = String.IsNullOrEmpty(sortOrder) ? "BoardName_desc" : "";
-            ViewData["LengthSort"] = sortOrder == "Length" ? "Length_desc" : "Length";
-            ViewData["WidthSort"] = sortOrder == "Width" ? "Width_desc" : "Width";
-            ViewData["ThicknessSort"] = sortOrder == "Thickness" ? "Thickness_desc" : "Thickness";
-            ViewData["VolumeSort"] = sortOrder == "Volume" ? "Volume_desc" : "Volume";
-            ViewData["PriceSort"] = sortOrder == "Price" ? "Price_desc" : "Price";
-            ViewData["BoardTypeSort"] = sortOrder == "BoardType" ? "BoardType_desc" : "BoardType";
-            if (SearchString !=null)
+            if (SearchString != null)
             {
-                pageNumber =1;
+                pageNumber = 1;
             }
             else
             {
-                SearchString=currentFilter;
+                SearchString = currentFilter;
             }
             var surfBoard = from s in _context.SurfBoard
                             select s;
@@ -44,6 +38,16 @@ namespace Surf_Boards.Controllers
             {
                 surfBoard = surfBoard.Where(s => s.BoardName.Contains(SearchString));
             }
+            //Filtering 
+            ViewData["NameSort"] = String.IsNullOrEmpty(sortOrder) ? "BoardName_desc" : "";
+            ViewData["LengthSort"] = sortOrder == "Length" ? "Length_desc" : "Length";
+            ViewData["WidthSort"] = sortOrder == "Width" ? "Width_desc" : "Width";
+            ViewData["ThicknessSort"] = sortOrder == "Thickness" ? "Thickness_desc" : "Thickness";
+            ViewData["VolumeSort"] = sortOrder == "Volume" ? "Volume_desc" : "Volume";
+            ViewData["PriceSort"] = sortOrder == "Price" ? "Price_desc" : "Price";
+            ViewData["BoardTypeSort"] = sortOrder == "BoardType" ? "BoardType_desc" : "BoardType";
+           
+    
             switch (sortOrder)
             {
                 case "BoardName_desc":
@@ -89,6 +93,8 @@ namespace Surf_Boards.Controllers
                     surfBoard=surfBoard.OrderBy(s => s.BoardName);
                     break;
             }
+            //Pagination 
+            ViewData["CurrentSort"] = sortOrder;
             int pageSize = 10;
             return View(await PaginatedList<SurfBoard>.CreateAsync(surfBoard.AsNoTracking(), pageNumber?? 1, pageSize));
         }

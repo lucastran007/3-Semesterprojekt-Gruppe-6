@@ -63,8 +63,10 @@ namespace Surf_Boards.Controllers
             if (ModelState.IsValid)
             {
 
-
+                // generate unique id
                 surfBoard.Id = Guid.NewGuid();
+                //image stuff
+                //save image to wwwroot/images
                 if (surfBoard.ImageFile != null)
                 {
                     string wwwRootPath = _hostEnvironment.WebRootPath;
@@ -78,7 +80,7 @@ namespace Surf_Boards.Controllers
                     }
 
                 }
-
+                // Her Adder vi lortet 
                 _context.Add(surfBoard);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -119,10 +121,13 @@ namespace Surf_Boards.Controllers
 
                 try
                 {
+                   
+                   
 
+                    // Does the user have added a new image? Then we replace the old 
                     if (surfBoard.ImageFile != null && surfBoard.ImageFile.Length >0)
                     {
-                       
+                       // It check if there is an image and if so deletes it 
                         if (surfBoard.ImageName != null && surfBoard.ImageFile != null)
                         {
                         string imagePathe = _hostEnvironment.WebRootPath;
@@ -137,7 +142,7 @@ namespace Surf_Boards.Controllers
                         {
                             _context.ChangeTracker.Clear();
                         }
-
+                        // saves a new image 
                         string wwwRootPath = _hostEnvironment.WebRootPath;
                         string filename = Path.GetFileNameWithoutExtension(surfBoard.ImageFile.FileName);
                         string extension = Path.GetExtension(surfBoard.ImageFile.FileName);
