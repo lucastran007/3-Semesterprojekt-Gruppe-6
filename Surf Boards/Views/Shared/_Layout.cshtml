@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using Surf_Boards.Areas.Identity.Data
+
+@inject SignInManager<Surf_BoardsUser> SignInManager
+@inject UserManager<Surf_BoardsUser> UserManager
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -19,17 +26,20 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                       @* <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">SurfBoards</a>
+                        @* <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">SurfBoards</a>
                         </li>*@
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="SurfBoards" asp-action="Index">Admin</a>
-                        </li>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="SurfBoards" asp-action="Index">Admin</a>
+                            </li>
+                        }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
-                    <partial name="_LoginPartial"/>
+                    <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>

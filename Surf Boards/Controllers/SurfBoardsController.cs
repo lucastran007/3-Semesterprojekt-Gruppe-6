@@ -9,6 +9,9 @@ using Surf_Boards.Data;
 using Surf_Boards.Models;
 using Microsoft.AspNetCore.Hosting;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.VisualBasic;
+using Surf_Boards.Core;
 
 namespace Surf_Boards.Controllers
 {
@@ -24,6 +27,7 @@ namespace Surf_Boards.Controllers
         }
 
         // GET: SurfBoards
+        [Authorize(Policy = ConstantsRole.Policies.RequireAdmin)]
         public async Task<IActionResult> Index()
         {
             return View(await _context.SurfBoard.ToListAsync());

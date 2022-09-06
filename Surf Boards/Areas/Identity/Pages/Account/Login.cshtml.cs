@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Surf_Boards.Areas.Identity.Data;
+using System.Security.Claims;
 
 namespace Surf_Boards.Areas.Identity.Pages.Account
 {
@@ -112,7 +113,38 @@ namespace Surf_Boards.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                var user = await _signInManager.UserManager.FindByNameAsync(Input.Email);
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "invalid login attempt");
+                    return Page();
+                }
+
+                var result = await _signInManager.CheckPasswordSignInAsync(user, Input.Password, false);
+
+                if (result.Succeeded)
+                {
+
+                    var claims = new List<Claim>
+                    {
+                        new Claim("amr", "pwd")
+                    };
+
+                    var roles = await _signInManager.UserManager.GetRolesAsync(user);
+
+                    if (roles.Any())
+                    {
+                        //manger,user
+                        var roleClaim = string.Join(",", roles);
+                        claims.Add(new Claim("Roles", roleClaim));
+                    }
+
+                    await _signInManager.SignInWithClaimsAsync(user, Input.RememberMe, claims);
+
+                    _logger.LogInformation("User logged in.");
+                    return LocalRedirect(returnUrl);
+                }
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");

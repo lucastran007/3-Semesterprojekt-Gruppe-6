@@ -4,6 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 using Surf_Boards.Areas.Identity.Data;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.VisualBasic;
+using Surf_Boards.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<Surf_BoardsContext>(options =>
@@ -11,12 +13,20 @@ builder.Services.AddDbContext<Surf_BoardsContext>(options =>
 
 builder.Services.AddDbContext<Surf_BoardsContext1>(options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("Surf_BoardsContext") ?? throw new InvalidOperationException("Connection string 'Surf_BoardsContext' not found.")));
-builder.Services.AddDefaultIdentity<Surf_BoardsUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<Surf_BoardsUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<Surf_BoardsContext1>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 //builder.Services.AddDbContext<SurfBoardDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("MvcSurfBoardConnectionString")));
+
+
+#region Authorizaition
+
+AddAuthorizationPolicies();
+
+#endregion
 
 var app = builder.Build();
 
@@ -42,3 +52,12 @@ app.MapControllerRoute(
 
 app.MapRazorPages();
 app.Run();
+
+void AddAuthorizationPolicies()
+{
+    builder.Services.AddAuthorization(options =>
+    {
+        options.AddPolicy(ConstantsRole.Policies.RequireAdmin, policy => policy.RequireRole(ConstantsRole.Roles.Administrator));
+        options.AddPolicy(ConstantsRole.Policies.RequireManager, policy => policy.RequireRole(ConstantsRole.Roles.Manager));
+    });
+}
