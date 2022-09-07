@@ -1,6 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using Surf_Boards.Areas.Identity.Data
+@using Microsoft.AspNetCore.Authorization
+@using Surf_Boards.Core
 
+@inject IAuthorizationService AuthorizationService
 @inject SignInManager<Surf_BoardsUser> SignInManager
 @inject UserManager<Surf_BoardsUser> UserManager
 
@@ -26,10 +29,10 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        @* <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">SurfBoards</a>
-                        </li>*@
-                        @if (SignInManager.IsSignedIn(User))
+                         <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        @if (User.IsInRole(ConstantsRole.Roles.Administrator)) //Only shows the admin navigation link if you have admin role.
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="SurfBoards" asp-action="Index">Admin</a>

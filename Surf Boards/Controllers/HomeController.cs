@@ -38,7 +38,7 @@ namespace Surf_Boards.Controllers
             {
                 surfBoard = surfBoard.Where(s => s.BoardName.Contains(SearchString));
             }
-            //Filtering 
+            //Sorting 
             ViewData["NameSort"] = String.IsNullOrEmpty(sortOrder) ? "BoardName_desc" : "";
             ViewData["LengthSort"] = sortOrder == "Length" ? "Length_desc" : "Length";
             ViewData["WidthSort"] = sortOrder == "Width" ? "Width_desc" : "Width";
@@ -46,7 +46,6 @@ namespace Surf_Boards.Controllers
             ViewData["VolumeSort"] = sortOrder == "Volume" ? "Volume_desc" : "Volume";
             ViewData["PriceSort"] = sortOrder == "Price" ? "Price_desc" : "Price";
             ViewData["BoardTypeSort"] = sortOrder == "BoardType" ? "BoardType_desc" : "BoardType";
-           
     
             switch (sortOrder)
             {

@@ -15,6 +15,7 @@ using Surf_Boards.Core;
 
 namespace Surf_Boards.Controllers
 {
+    [Authorize(Policy = ConstantsRole.Policies.RequireAdmin)]
     public class SurfBoardsController : Controller
     {
         private readonly Surf_BoardsContext _context;
@@ -27,7 +28,7 @@ namespace Surf_Boards.Controllers
         }
 
         // GET: SurfBoards
-        [Authorize(Policy = ConstantsRole.Policies.RequireAdmin)]
+        
         public async Task<IActionResult> Index()
         {
             return View(await _context.SurfBoard.ToListAsync());

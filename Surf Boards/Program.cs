@@ -13,6 +13,8 @@ builder.Services.AddDbContext<Surf_BoardsContext>(options =>
 
 builder.Services.AddDbContext<Surf_BoardsContext1>(options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("Surf_BoardsContext") ?? throw new InvalidOperationException("Connection string 'Surf_BoardsContext' not found.")));
+
+
 builder.Services.AddDefaultIdentity<Surf_BoardsUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<Surf_BoardsContext1>();
