@@ -98,6 +98,9 @@
    class="btn btn-default @prevDisabled">
     Previous
 </a>
+<span>
+    @Model.PageIndex of @Model.TotalPages
+</span>
 <a asp-action="Index"
    asp-route-sortOrder="@ViewData["CurrentSort"]"
    asp-route-pageNumber="@(Model.PageIndex + 1)"

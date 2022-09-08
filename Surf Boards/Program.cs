@@ -6,6 +6,8 @@ using Surf_Boards.Areas.Identity.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.VisualBasic;
 using Surf_Boards.Core;
+using Surf_Boards.Core.Repository;
+using Surf_Boards.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<Surf_BoardsContext>(options =>
@@ -29,6 +31,8 @@ builder.Services.AddControllersWithViews();
 AddAuthorizationPolicies();
 
 #endregion
+
+AddScoped();
 
 var app = builder.Build();
 
@@ -61,5 +65,13 @@ void AddAuthorizationPolicies()
     {
         options.AddPolicy(ConstantsRole.Policies.RequireAdmin, policy => policy.RequireRole(ConstantsRole.Roles.Administrator));
         options.AddPolicy(ConstantsRole.Policies.RequireManager, policy => policy.RequireRole(ConstantsRole.Roles.Manager));
+
     });
+}
+
+void AddScoped()
+{
+    builder.Services.AddScoped<IUserRepository, UserRepository>();
+    builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+    builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 }

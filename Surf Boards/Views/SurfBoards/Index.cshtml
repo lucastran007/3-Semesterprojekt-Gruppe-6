@@ -1,40 +1,53 @@
-﻿@model IEnumerable<Surf_Boards.Models.SurfBoard>
+﻿@model PaginatedList<Surf_Boards.Models.SurfBoard>
+
 
 @{
     ViewData["Title"] = "Index";
 }
 
 <h1>Index</h1>
-
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<form asp-action="Index" method="get">
+    <div class="form-group">
+        <label for="SearchingString">Search by partial title:</label>
+        <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+        <input type="submit" value="Search" class="btn btn-primary" />
+
+    </div>
+</form>
+<a asp-action="Index"> Back to full list</a>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.BoardName)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Board Name</a>
+            </th>
+
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["LengthSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Length</a>
+            </th>
+
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["WidthSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Width</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Length)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["ThicknessSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Thickness</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Width)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["VolumeSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Volume</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Thickness)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["BoardTypeSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Board Type</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Volume)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["PriceSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Price</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Boardtype)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Equipment)
+                Equipment
             </th>
             <th>
                 Billede
@@ -43,42 +56,66 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.BoardName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Length)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Width)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Thickness)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Volume)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Boardtype)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Equipment)
-            </td>
-            <td>
-                <img src="@("~/Images/"+item.ImageName)" asp-append-version="true" width="25px" height="25px" />
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BoardName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Length)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Width)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Thickness)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Volume)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Boardtype)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Equipment)
+                </td>
+               
+                <td>
+                    <img src="@("~/Images/"+item.ImageName)" asp-append-version="true" width="25px" height="25px" />
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<span>
+   @Model.PageIndex of @Model.TotalPages
+</span>
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>

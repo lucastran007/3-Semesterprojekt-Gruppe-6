@@ -13,3 +13,8 @@ public class Surf_BoardsUser : IdentityUser
     public string LastName { get; set; }
 }
 
+public class Surf_BoardRole : IdentityRole
+{
+
+}
+
