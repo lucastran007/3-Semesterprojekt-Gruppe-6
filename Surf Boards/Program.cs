@@ -65,6 +65,7 @@ void AddAuthorizationPolicies()
     {
         options.AddPolicy(ConstantsRole.Policies.RequireAdmin, policy => policy.RequireRole(ConstantsRole.Roles.Administrator));
         options.AddPolicy(ConstantsRole.Policies.RequireManager, policy => policy.RequireRole(ConstantsRole.Roles.Manager));
+        options.AddPolicy(ConstantsRole.Policies.RequireUser, policy => policy.RequireRole(ConstantsRole.Roles.User));
 
     });
 }
