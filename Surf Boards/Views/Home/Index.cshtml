@@ -81,6 +81,9 @@
                 <td>
                     <img src="@("~/Images/"+item.ImageName)" asp-append-version="true" width="25px" height="25px" />
                 </td>
+                <td>
+                <a asp-controller="Rental" asp-action="Create" asp-route-id="@item.Id">Create</a> 
+                </td>
             </tr>
         }
     </tbody>
