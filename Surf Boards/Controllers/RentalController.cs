@@ -36,7 +36,6 @@ namespace Surf_Boards.Controllers
         public async Task<IActionResult> Create([Bind("Id,Surfboard,StartTime,EndTime,User")] Rental rental)
         {
             var user = await _userManager.GetUserAsync(User);
-            var surfboard = Surdboard.Id;
 
             if (ModelState.IsValid)
             {
