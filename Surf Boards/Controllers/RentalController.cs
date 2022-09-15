@@ -33,25 +33,27 @@ namespace Surf_Boards.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Surfboard,StartTime,EndTime,User")] Rental rental)
+        public async Task<IActionResult> Create(Guid id)
         {
+
+            var board = await _context.SurfBoard.FindAsync(id);
             var user = await _userManager.GetUserAsync(User);
-
-            if (ModelState.IsValid)
-            {
-                //Generate unique ID
-                rental.Id = Guid.NewGuid();
-                //Gets current user
-             
+            Guid rentalId = Guid.NewGuid();
 
 
-                _context.Add(rental);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+            Rental rental = new Rental(rentalId, DateTime.Now, 4, id, user.Id) ;
+            
 
 
-            }
-            return View();
+
+
+            _context.Add(rental);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+
+
+
+            //return View();
 
         }
 
