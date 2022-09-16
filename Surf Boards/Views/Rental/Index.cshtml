@@ -5,3 +5,29 @@
 }
 
 <h1>Your rentals</h1>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th scope="col">Board name</th>
+			<th scope="col">Rental date</th>
+			<th scope="col">Price</th>
+			<th scope="col">Equipment</th>
+			<th scope="col">Billed</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach(var rental in Model.Rentals)
+		{
+			<tr>
+				<td>@Html.DisplayFor(modelitem => rental.Surfboard.BoardName)</td>
+				<td>@Html.DisplayFor(modelitem => rental.RentalDate)</td>
+				<td>@Html.DisplayFor(modelitem => rental.Surfboard.Price)</td>
+				<td>@Html.DisplayFor(modelitem => rental.Surfboard.Equipment)</td>
+				<td><img src="@("~/Images/"+rental.Surfboard.ImageName)" asp-append-version="true" width="25px" height="25px" /></td>
+				<td><a asp-action="Delete" asp-route-id="@rental.RentalId">Delete</a></td>
+			</tr>
+		}
+	</tbody>
+</table>
