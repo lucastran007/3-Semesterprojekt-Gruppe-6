@@ -14,26 +14,18 @@
 	  <form asp-action="Create">
 	<input type="hidden" asp-for="RentalId" />
 	<input type="hidden" asp-for="User.Id" />
-	<label asp-for="StartTime" class="control-label"></label>
+	<label asp-for="RentalDate" class="control-label"></label>
 	<div class="input-group date" id="datepicker">
-		<input asp-for="StartTime" type="text" class="form-control" value="@DateTime.Now.ToString("HH:mm DD-MM-YYYY")" />
+		<input asp-for="RentalDate" type="text" class="form-control" value="@DateTime.Now.ToString("DD-MM-YYYY")" />
 		<span class="input-group-addon">
 			<span class="glyphicon glyphicon-calendar"> </span>
 		</span>
 	</div>
-	<span asp-validation-for="StartTime" class="text-danger"></span>
+	<span asp-validation-for="RentalDate" class="text-danger"></span>
 
-	<label asp-for="EndTime" class="control-label"></label>
-	<div class="input-group date" id="datepicker2">
-		<input asp-for="EndTime" type="text" class="form-control" value="@DateTime.Now.ToString("HH:mm DD-MM-YYYY")" />
-		<span class="input-group-addon">
-			<span class="glyphicon glyphicon-calendar"> </span>
-		</span>
-	</div>
-	<span asp-validation-for="EndTime" class="text-danger"></span>
-	        <div class="form-group">
-            <input type="submit" value="Save" class="btn btn-primary" />
-        </div>
+	<div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
 
 </form>
 </div>
@@ -51,14 +43,18 @@
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
-		
+	
+	@* TODO;
+		Fetch dates that the board is already rented, and disable those in the picker
+		https://getdatepicker.com/4/#enableddisabled-dates
+	*@
 	<script>
 		$(function () {
 			$('#datepicker').datetimepicker({
-				format: 'HH:mm DD-MM-YYYY'
-			});
-			$('#datepicker2').datetimepicker({
-				format: 'HH:mm DD-MM-YYYY'
+				format: 'DD-MM-YYYY',
+				disabledDates: [
+                     moment("12/24/2022"),
+                 ]
 			});
 
 		});

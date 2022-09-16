@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Surf_Boards.Areas.Identity.Data;
 using Surf_Boards.Core.Repository;
@@ -31,6 +32,7 @@ namespace Surf_Boards.Controllers
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Guid id)
@@ -39,21 +41,14 @@ namespace Surf_Boards.Controllers
             var board = await _context.SurfBoard.FindAsync(id);
             var user = await _userManager.GetUserAsync(User);
             Guid rentalId = Guid.NewGuid();
-
-
-            Rental rental = new Rental(rentalId, DateTime.Now, 4, id, user.Id) ;
+            Rental rental = new Rental(rentalId, DateTime.Now, id, user.Id);
             
-
-
-
-
-            _context.Add(rental);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
-
-
-
-            //return View();
+            if(ModelState.IsValid) { 
+                _context.Add(rental);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            return View();
 
         }
 
