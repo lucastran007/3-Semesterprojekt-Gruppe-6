@@ -35,6 +35,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Rental" asp-action="Index">Your rentals</a>
+                        </li>
+                        }
                         @if (User.IsInRole(ConstantsRole.Roles.Administrator)) //Only shows the admin navigation link if you have admin role.
                         {
                             <li class="nav-item">

@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Surf_Boards.Areas.Identity.Data;
 using Surf_Boards.Core.Repository;
+using Surf_Boards.Core.ViewModel;
 using Surf_Boards.Data;
 using Surf_Boards.Models;
 using Surf_Boards.Models.Domain;
@@ -20,10 +22,41 @@ namespace Surf_Boards.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
+            var user = await _userManager.GetUserAsync(User);
+            var userId = await _userManager.GetUserIdAsync(user);
 
-            return View();
+            // Get all rentals by userId
+            var rentals = _context.Rental
+              .Where(x => x.UserId == userId)
+              .Select(n => new {
+                  n.RentalId,
+                  n.SurfboardId,
+                  n.RentalDate
+              });
+            //_context.ChangeTracker.Clear();
+            // Create a new list of boards
+            List<SurfBoard> rentedBoards = new List<SurfBoard>();
+            List<Rental> userRentals = new List<Rental>(); 
+
+            // Loop through each rental and add it to the newly created surfboard list
+            foreach (var rental in rentals)
+            {
+
+                rentedBoards.Add(_context.SurfBoard.Find(rental.SurfboardId));
+                userRentals.Add(_context.Rental.Find(rental.RentalId));
+
+            }
+
+            // Create the viewmodel
+            var rentalIndexVM = new RentalIndexViewModel
+            {
+                Surfboards = rentedBoards,
+                Rentals = userRentals
+            };
+
+            return View(rentalIndexVM);
         }
 
         //get Rental/create
