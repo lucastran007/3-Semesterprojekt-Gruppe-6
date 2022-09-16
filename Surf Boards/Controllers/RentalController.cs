@@ -80,33 +80,16 @@ namespace Surf_Boards.Controllers
             if(ModelState.IsValid) { 
                 _context.Add(rental);
                 await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Udlejning oprettet ✅";
                 return RedirectToAction("Index");
             }
             return View();
 
         }
 
-        // GET: SurfBoards/Delete/5
-        public async Task<IActionResult> Delete(Guid? rentalId)
-        {
-            if (rentalId == null || _context.Rental == null)
-            {
-                return NotFound();
-            }
-
-            var rental = await _context.Rental
-                .FirstOrDefaultAsync(m => m.RentalId == rentalId);
-            if (rental == null)
-            {
-                return NotFound();
-            }
-
-            return View(rental);
-        }
-
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid rentalId)
+        public async Task<IActionResult> Delete(Guid rentalId)
         {
             if (_context.Rental == null)
             {
@@ -116,13 +99,14 @@ namespace Surf_Boards.Controllers
             
             _context.Rental.Remove(rental);
             await _context.SaveChangesAsync();
+            TempData["SuccessMessage"] = "Udlejning slettet ✅";
             return RedirectToAction(nameof(Index));
         }
 
-        private bool RentalExists(Guid rentalId)
-        {
-            return _context.Rental.Any(e => e.RentalId == rentalId);
-        }
+        //private bool RentalExists(Guid rentalId)
+        //{
+        //    return _context.Rental.Any(e => e.RentalId == rentalId);
+        //}
 
     }
 }

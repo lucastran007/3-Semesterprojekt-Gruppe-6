@@ -6,6 +6,12 @@
 
 <h1>Your rentals</h1>
 
+@if (TempData["SuccessMessage"] != null) {
+	<div class="alert alert-success">
+		<b>@TempData["SuccessMessage"]</b>
+	</div>
+}
+
 <table class="table">
 	<thead>
 		<tr>
@@ -27,8 +33,9 @@
 				<td>@Html.DisplayFor(modelitem => rental.Surfboard.Equipment)</td>
 				<td><img src="@("~/Images/"+rental.Surfboard.ImageName)" asp-append-version="true" width="25px" height="25px" /></td>
 				 <td>
-					@Html.HiddenFor(modelitem => rental.RentalId)
-					 <a asp-controller="Rental" asp-action="Delete" asp-route-id="@rental.RentalId">Delete</a> |
+					 <form asp-action="Delete" asp-route-rentalId="@rental.RentalId">
+						<input type="submit" value="Delete" class="btn btn-danger" />
+					 </form>
 				 </td>   
 			</tr>
 		}
