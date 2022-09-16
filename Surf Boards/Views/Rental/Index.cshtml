@@ -26,7 +26,10 @@
 				<td>@Html.DisplayFor(modelitem => rental.Surfboard.Price)</td>
 				<td>@Html.DisplayFor(modelitem => rental.Surfboard.Equipment)</td>
 				<td><img src="@("~/Images/"+rental.Surfboard.ImageName)" asp-append-version="true" width="25px" height="25px" /></td>
-				<td><a asp-action="Delete" asp-route-id="@rental.RentalId">Delete</a></td>
+				 <td>
+					@Html.HiddenFor(modelitem => rental.RentalId)
+					 <a asp-controller="Rental" asp-action="Delete" asp-route-id="@rental.RentalId">Delete</a> |
+				 </td>   
 			</tr>
 		}
 	</tbody>
