@@ -11,23 +11,22 @@
 <h1>Create</h1>
 
 <div class="form-group">
-	  <form asp-action="Create">
-	<input type="hidden" asp-for="RentalId" />
-	<input type="hidden" asp-for="User.Id" />
-	<label asp-for="RentalDate" class="control-label"></label>
-	<div class="input-group date" id="datepicker">
-		<input asp-for="RentalDate" type="text" class="form-control" value="@DateTime.Now.ToString("DD-MM-YYYY")" />
-		<span class="input-group-addon">
-			<span class="glyphicon glyphicon-calendar"> </span>
-		</span>
-	</div>
-	<span asp-validation-for="RentalDate" class="text-danger"></span>
+	<form asp-action="Create">
+		<input type="hidden" asp-for="RentalId" />
+		<input type="hidden" asp-for="User.Id" />
+		<label asp-for="RentalDate" class="control-label"></label>
+		<div class="input-group date" id="datepicker">
+			<input asp-for="RentalDate" type="text" class="form-control" value="@DateTime.Now.ToString("DD-MM-YYYY")" />
+			<span class="input-group-addon">
+				<span class="glyphicon glyphicon-calendar"> </span>
+			</span>
+		</div>
+		<span asp-validation-for="RentalDate" class="text-danger"></span>
 
-	<div class="form-group">
-        <input type="submit" value="Save" class="btn btn-primary" />
-    </div>
-
-</form>
+		<div class="form-group">
+			<input type="submit" value="Save" class="btn btn-primary" />
+		</div>
+	</form>
 </div>
 
 

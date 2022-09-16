@@ -35,13 +35,13 @@ namespace Surf_Boards.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Guid id)
+        public async Task<IActionResult> Create(Guid id, DateTime rentalDate)
         {
 
             var board = await _context.SurfBoard.FindAsync(id);
             var user = await _userManager.GetUserAsync(User);
             Guid rentalId = Guid.NewGuid();
-            Rental rental = new Rental(rentalId, DateTime.Now, id, user.Id);
+            Rental rental = new Rental(rentalId, rentalDate, id, user.Id);
             
             if(ModelState.IsValid) { 
                 _context.Add(rental);
