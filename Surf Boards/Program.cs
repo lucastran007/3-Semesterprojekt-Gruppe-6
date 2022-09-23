@@ -27,14 +27,14 @@ builder.Services.AddDefaultIdentity<Surf_BoardsUser>(options => options.SignIn.R
 builder.Services.AddAuthentication()
 .AddGoogle(googleOptions =>
 {
-    googleOptions.ClientId = "test";
-    googleOptions.ClientSecret = "test";
+    googleOptions.ClientId = "885777028144-osaib3k40o2peh97tu1uttec0ut4pqd0.apps.googleusercontent.com";
+    googleOptions.ClientSecret = "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";
 
 })
 .AddFacebook(facebookOptions =>
 {
-    facebookOptions.AppId = "test";
-    facebookOptions.AppSecret = "test";
+    facebookOptions.AppId = "2469950299814688";
+    facebookOptions.AppSecret = "f6bd6db2667e16056587e9e1e5492487";
 }
 );
 
