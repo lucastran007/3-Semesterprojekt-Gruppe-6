@@ -1,7 +1,7 @@
 ﻿@page
 @using Surf_Boards.Areas.Identity
 @using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> signInManager
+@inject SignInManager<Surf_BoardsUser> signInManager
 
 @model LoginModel
 
@@ -83,10 +83,10 @@
         </section>
     </div>
 </div>
- }
+ 
 
 
-@{
+@*@{
     var schemes = await signInManager.GetExternalAuthenticationSchemesAsync();
     var loginProvider = schemes.ToList();
 }
@@ -110,7 +110,7 @@
             </form>
         </section>
     </div>
-}
+}*@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
