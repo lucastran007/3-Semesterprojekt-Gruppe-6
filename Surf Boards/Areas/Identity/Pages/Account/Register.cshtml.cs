@@ -73,7 +73,7 @@ namespace Surf_Boards.Areas.Identity.Pages.Account
         {
             [Required]
             [StringLength(255, ErrorMessage = "The first name field sholud have a maximum og 255 characters")]
-            [Display(Name ="FirstName")]
+            [Display(Name = "FirstName")]
             public string FirstName { get; set; }
 
             [Required]
@@ -130,10 +130,13 @@ namespace Surf_Boards.Areas.Identity.Pages.Account
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                await _signInManager.UserManager.AddToRoleAsync(user, Core.ConstantsRole.Roles.User);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
                 {
+
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
