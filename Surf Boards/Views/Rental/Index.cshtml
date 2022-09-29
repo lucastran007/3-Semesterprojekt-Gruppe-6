@@ -1,0 +1,43 @@
+﻿@model Surf_Boards.Core.ViewModel.RentalIndexViewModel
+
+@{
+	ViewData["Title"] = "Your rentals";
+}
+
+<h1>Your rentals</h1>
+
+@if (TempData["SuccessMessage"] != null) {
+	<div class="alert alert-success">
+		<b>@TempData["SuccessMessage"]</b>
+	</div>
+}
+
+<table class="table">
+	<thead>
+		<tr>
+			<th scope="col">Board name</th>
+			<th scope="col">Rental date</th>
+			<th scope="col">Price</th>
+			<th scope="col">Equipment</th>
+			<th scope="col">Billed</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach(var rental in Model.Rentals)
+		{
+			<tr>
+				<td>@Html.DisplayFor(modelitem => rental.Surfboard.BoardName)</td>
+				<td>@Html.DisplayFor(modelitem => rental.RentalDate)</td>
+				<td>@Html.DisplayFor(modelitem => rental.Surfboard.Price)</td>
+				<td>@Html.DisplayFor(modelitem => rental.Surfboard.Equipment)</td>
+				<td><img src="@("~/Images/"+rental.Surfboard.ImageName)" asp-append-version="true" width="25px" height="25px" /></td>
+				 <td>
+					 <form asp-action="Delete" asp-route-rentalId="@rental.RentalId">
+						<input type="submit" value="Delete" class="btn btn-danger" />
+					 </form>
+				 </td>   
+			</tr>
+		}
+	</tbody>
+</table>

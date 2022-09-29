@@ -65,6 +65,24 @@ namespace Surf_Boards.Controllers
             var rolesToAdd = new List<string>();
             var rolesToDelete = new List<string>();
 
+            foreach (var role in data.Roles)
+            {
+                var assignedInDb = userRolesInDb.FirstOrDefault(ur => ur == role.Text);
+                if (role.Selected)
+                {
+                    if (assignedInDb == null)
+                    {
+                        rolesToAdd.Add(role.Text);
+                    }
+                }
+                else
+                {
+                    if (assignedInDb != null)
+                    {
+                        rolesToDelete.Add(role.Text);
+                    }
+                }
+            }
 
             if (rolesToAdd.Any())
             {

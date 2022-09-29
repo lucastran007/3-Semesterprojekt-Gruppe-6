@@ -15,5 +15,6 @@ namespace Surf_Boards.Data
         }
 
         public DbSet<Surf_Boards.Models.SurfBoard> SurfBoard { get; set; } = default!;
+        public DbSet<Surf_Boards.Models.Domain.Rental> Rental { get; set; } = default!;
     }
 }

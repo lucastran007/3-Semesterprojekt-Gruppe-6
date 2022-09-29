@@ -8,6 +8,7 @@ using Microsoft.VisualBasic;
 using Surf_Boards.Core;
 using Surf_Boards.Core.Repository;
 using Surf_Boards.Repositories;
+using Microsoft.AspNetCore.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<Surf_BoardsContext>(options =>
@@ -43,6 +44,19 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+// localization, fix number issue with comma vs dot
+//var supportedCultures = new string[] { "da-DK", "en-GB" };
+//app.UseRequestLocalization(options =>
+//            options
+//            .AddSupportedCultures(supportedCultures)
+//            .AddSupportedUICultures(supportedCultures)
+//            .SetDefaultCulture("da-DK")
+//            .RequestCultureProviders.Insert(0, new CustomRequestCultureProvider(context =>
+//            {
+//                return Task.FromResult(new ProviderCultureResult("en-GB"));
+//            }))
+//);
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
