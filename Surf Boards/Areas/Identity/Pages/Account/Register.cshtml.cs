@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
@@ -17,6 +18,8 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
 using Surf_Boards.Areas.Identity.Data;
 
@@ -109,6 +112,45 @@ namespace Surf_Boards.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public IActionResult ExternalLogin(string provider, string returnurl = null)
+        {
+            var redirect = Url.Action("ExternalLogInCallback", "Account", new { ReturnUrl = returnurl });
+            var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirect);
+            return Challenge(properties, provider);
+        }
+
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        //public async IActionResult ExternalLoginCallback(string returnurl = null, string remoteError = null)
+        //{
+        //    if (remoteError !=null)
+        //    {
+        //        ModelState.AddModelError(string.Empty, "Error form external provider");
+        //    }
+        //    var info = await _signInManager.GetExternalLoginInfoAsync();
+        //    if (info == null)
+        //    {
+        //        return RedirectToAction("Login");
+        //    }
+        //    var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
+        //    if (result.Succeeded)
+        //    {
+        //        await _signInManager.UpdateExternalAuthenticationTokensAsync(info);
+        //        return LocalRedirect(returnurl);
+        //    }
+        //    else
+        //    {
+        //        ViewData["ReturnUrl"] = returnurl;
+        //        ViewData["ProviderDisplayName"] = info.ProviderDisplayName;
+        //        var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+        //        return View("ExternalLoginConfirmation");
+        //    }
+        //}
 
 
         public async Task OnGetAsync(string returnUrl = null)

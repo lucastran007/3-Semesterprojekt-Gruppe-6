@@ -14,13 +14,29 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<Surf_BoardsContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Surf_BoardsContext") ?? throw new InvalidOperationException("Connection string 'Surf_BoardsContext' not found.")));
 
-builder.Services.AddDbContext<Surf_BoardsContext1>(options => 
+builder.Services.AddDbContext<Surf_BoardsContext1>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Surf_BoardsContext") ?? throw new InvalidOperationException("Connection string 'Surf_BoardsContext' not found.")));
 
 
 builder.Services.AddDefaultIdentity<Surf_BoardsUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<Surf_BoardsContext1>();
+
+//builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration.GetSection("SendGrid"));
+
+builder.Services.AddAuthentication()
+.AddGoogle(googleOptions =>
+{
+    googleOptions.ClientId = "885777028144-osaib3k40o2peh97tu1uttec0ut4pqd0.apps.googleusercontent.com";
+    googleOptions.ClientSecret = "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";
+
+})
+.AddFacebook(facebookOptions =>
+{
+    facebookOptions.AppId = "2469950299814688";
+    facebookOptions.AppSecret = "f6bd6db2667e16056587e9e1e5492487";
+}
+);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -62,7 +78,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseAuthentication();;
+app.UseAuthentication(); ;
 
 app.UseAuthorization();
 

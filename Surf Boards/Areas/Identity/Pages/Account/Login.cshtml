@@ -1,4 +1,8 @@
 ﻿@page
+@using Surf_Boards.Areas.Identity
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Surf_BoardsUser> signInManager
+
 @model LoginModel
 
 @{
@@ -79,6 +83,34 @@
         </section>
     </div>
 </div>
+ 
+
+
+@*@{
+    var schemes = await signInManager.GetExternalAuthenticationSchemesAsync();
+    var loginProvider = schemes.ToList();
+}
+@if (loginProvider.Count() > 0)
+{
+    <div class="col-md-4">
+        <section>
+            <h4>User another service to login</h4>
+            <form asp-controller="Account" asp-action="ExternalLogin" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" role="form">
+                <div>
+                    <p>
+                        @foreach (var provider in loginProvider)
+                        {
+                            <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name"
+                            title="Login using your @provider.Name account">
+                                @provider.Name
+                            </button>
+                        }
+                    </p>
+                </div>
+            </form>
+        </section>
+    </div>
+}*@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
