@@ -12,6 +12,9 @@ namespace Surf_Boards.Models.Domain
         [Key]
         public Guid RentalId { get; set; }
 
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
+
         [Required]
         public Guid SurfboardId { get; set; }
 

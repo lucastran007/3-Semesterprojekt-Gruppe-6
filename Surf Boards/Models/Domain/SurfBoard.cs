@@ -10,6 +10,9 @@ namespace Surf_Boards.Models
         [Key]
         public Guid Id { get; set; }
 
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
+
         [Column]
         [Required(ErrorMessage ="Feltet er ikke udfyldt")]
         [DisplayName("Navn")]
