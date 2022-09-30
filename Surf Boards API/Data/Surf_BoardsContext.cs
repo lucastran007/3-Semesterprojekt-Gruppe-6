@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Surf_Boards.Models;
+using Surf_Boards_API.Models;
 
 namespace Surf_Boards.Data {
     public class Surf_BoardsContext : DbContext 
@@ -8,6 +9,7 @@ namespace Surf_Boards.Data {
         }
 
         public DbSet<SurfBoard> SurfBoard { get; set; }
-        //public DbSet<Surf_Boards.Models.Domain.Rental> Rental { get; set; } = default!;
+        public DbSet<Rental> Rental { get; set; }
+
     }
 }
