@@ -74,8 +74,11 @@ namespace Surf_Boards.Controllers
 
             var board = await _context.SurfBoard.FindAsync(id);
             var user = await _userManager.GetUserAsync(User);
+            //var userIp = HttpContext.Connection.RemoteIpAddress.ToString();
+            var userIp = "123.123.123.123";
+
             Guid rentalId = Guid.NewGuid();
-            Rental rental = new Rental(rentalId, rentalDate, id, user.Id);
+            Rental rental = new Rental(rentalId, rentalDate, id, user.Id, userIp);
             
             if(ModelState.IsValid) { 
                 _context.Add(rental);

@@ -20,6 +20,9 @@ namespace Surf_Boards.Models.Domain
 
         [Required]
         public string UserId { get; set; }
+
+        [Required]
+        public string UserIp { get; set; }
        
         [BindProperty]
         [DataType(DataType.Date)]
@@ -30,12 +33,13 @@ namespace Surf_Boards.Models.Domain
         public Surf_BoardsUser User { get; set; }
 
 
-        public Rental(Guid rentalId, DateTime rentalDate, Guid surfboardId, string userId)
+        public Rental(Guid rentalId, DateTime rentalDate, Guid surfboardId, string userId, string userIp)
         {
             RentalId = rentalId;
             RentalDate = rentalDate;
             SurfboardId = surfboardId;
             UserId = userId;
+            UserIp = userIp;
         }
     }
 }
