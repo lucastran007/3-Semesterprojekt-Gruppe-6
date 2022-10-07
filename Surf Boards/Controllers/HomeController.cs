@@ -3,16 +3,20 @@ using Surf_Boards.Models;
 using System.Diagnostics;
 using Surf_Boards.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Surf_Boards.Areas.Identity.Data;
 
 namespace Surf_Boards.Controllers
 {
     public class HomeController : Controller
     {
         private readonly Surf_BoardsContext _context;
+        private readonly SignInManager<Surf_BoardsUser> _signInManager;
 
-        public HomeController(Surf_BoardsContext context)
+        public HomeController(Surf_BoardsContext context, SignInManager<Surf_BoardsUser> signInManager)
         {
             _context = context;
+            this._signInManager = signInManager;
         }
 
         // GET: SurfBoards
@@ -31,8 +35,21 @@ namespace Surf_Boards.Controllers
             {
                 SearchString = currentFilter;
             }
+
+
             var surfBoard = from s in _context.SurfBoard
                             select s;
+
+            // Reduce surfboard to X if not logged in
+            if (!_signInManager.IsSignedIn(User))
+            {
+                surfBoard = surfBoard.Take(10);
+                ViewBag.NotLoggedInNotice = "You are currently not logged in, and will therefor not able to see all available board.";
+            } else
+            {
+                ViewBag.NotLoggedInNotice = null;
+            }
+
 
             if (!String.IsNullOrEmpty(SearchString))
             {

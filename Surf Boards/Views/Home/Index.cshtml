@@ -13,7 +13,14 @@
     </div>  
 </form>
 
+<br/>
 
+@if (@ViewBag.NotLoggedInNotice != null)
+{
+    <div class="alert alert-warning" role="alert">
+        @ViewBag.NotLoggedInNotice
+    </div>
+}
 
 <table class="table">
     <thead>
@@ -113,3 +120,12 @@
    class="btn btn-default @nextDisabled">
     Next
 </a>
+
+<hr />
+
+@if (@ViewBag.NotLoggedInNotice == null)
+{
+    <div class="alert alert-success" role="alert">
+        Thanks for signing up on our site! 😎
+    </div>
+}
