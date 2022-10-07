@@ -4,13 +4,13 @@ using Surf_Boards.Data;
 
 namespace Surf_Boards_API.Controllers {
 
-    [Route("api/[controller]")]
+    [ApiVersion("1")]
+    [Route("api/v{version:apiVersion}/surfboards")]
     [ApiController]
-
-    public class SurfboardsController : ControllerBase {
+    public class SurfboardsV1Controller : ControllerBase {
         private readonly Surf_BoardsContext _context;
 
-        public SurfboardsController(Surf_BoardsContext context) {
+        public SurfboardsV1Controller(Surf_BoardsContext context) {
             _context = context;
         }
     

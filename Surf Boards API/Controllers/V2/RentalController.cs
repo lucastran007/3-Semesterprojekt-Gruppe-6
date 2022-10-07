@@ -6,19 +6,18 @@ using Surf_Boards_API.Models;
 
 namespace Surf_Boards_API.Controllers
 {
-    [Route("api/[controller]")]
+    [ApiVersion("2")]
+    [Route("api/v{version:apiVersion}/rental")]
     [ApiController]
-    public class RentalController : ControllerBase
+    public class RentalV2Controller : ControllerBase
     {
         private readonly Surf_BoardsContext _context;
-        public RentalController(Surf_BoardsContext context)
+        public RentalV2Controller(Surf_BoardsContext context)
         {
             _context = context;
         }
+
         // Get all Rentals 
-
-
-
         [HttpGet]
         public async Task<IActionResult> GetRentals()
         { var rentals = await _context.Rental.ToArrayAsync();
@@ -32,6 +31,7 @@ namespace Surf_Boards_API.Controllers
             var rental = await _context.Rental.FindAsync(id);
             if (rental == null)
                 return NotFound();
+
             return Ok(rental);
         }
 
