@@ -9,10 +9,10 @@
     <div class="form-group">
         <label for="SearchingString">Search by partial title:</label>
         <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
-        <input type="submit" value="Search" class="btn btn-primary" />
+        <input type="submit" value="Search" class="btn btn-primary" /> <a asp-action="Index"><button type="button" class="btn btn-primary">Reset</button></a>
     </div>  
 </form>
-<a asp-action="Index"> Back to full list</a>
+
 
 
 <table class="table">
@@ -45,7 +45,7 @@
                Equipment
             </th>
             <th>
-                Billede
+               Image
             </th>
             <th></th>
         </tr>
@@ -82,7 +82,9 @@
                     <img src="@("~/Images/"+item.ImageName)" asp-append-version="true" width="25px" height="25px" />
                 </td>
                 <td>
-                <a asp-controller="Rental" asp-action="Create" asp-route-id="@item.Id">Create</a> 
+                <a asp-controller="Rental" asp-action="Create" asp-route-id="@item.Id">
+                    <input type="submit" value="Rent Board" class="btn btn-primary" />
+                </a> 
                 </td>
             </tr>
         }
