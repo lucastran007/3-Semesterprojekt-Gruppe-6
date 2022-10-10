@@ -12,14 +12,17 @@ namespace Surf_Boards.Models.Domain
         [Key]
         public Guid RentalId { get; set; }
 
+        public string RentalName { get; set; }
+        public string RentalPhone { get; set; }
+
         [Timestamp]
         public byte[] RowVersion { get; set; }
 
         [Required]
         public Guid SurfboardId { get; set; }
 
-        [Required]
-        public string UserId { get; set; }
+        //[Required]
+        public string? UserId { get; set;  }
 
         [Required]
         public string UserIp { get; set; }
@@ -33,13 +36,16 @@ namespace Surf_Boards.Models.Domain
         public Surf_BoardsUser User { get; set; }
 
 
-        public Rental(Guid rentalId, DateTime rentalDate, Guid surfboardId, string userId, string userIp)
+        public Rental(Guid rentalId, string rentalName, string rentalPhone, DateTime rentalDate, Guid surfboardId, string userId, string userIp)
         {
             RentalId = rentalId;
+            RentalName = rentalName;
+            RentalPhone = rentalPhone;
             RentalDate = rentalDate;
             SurfboardId = surfboardId;
             UserId = userId;
             UserIp = userIp;
         }
+
     }
 }

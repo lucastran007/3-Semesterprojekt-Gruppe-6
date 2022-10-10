@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Surf_Boards.Data;
 
@@ -11,9 +12,10 @@ using Surf_Boards.Data;
 namespace Surf_Boards.Migrations
 {
     [DbContext(typeof(Surf_BoardsContext))]
-    partial class Surf_BoardsContextModelSnapshot : ModelSnapshot
+    [Migration("20221010094047_Rental_RentalPhone_RentalName")]
+    partial class Rental_RentalPhone_RentalName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,6 +106,7 @@ namespace Surf_Boards.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("UserIp")
@@ -174,7 +177,9 @@ namespace Surf_Boards.Migrations
 
                     b.HasOne("Surf_Boards.Areas.Identity.Data.Surf_BoardsUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Surfboard");
 

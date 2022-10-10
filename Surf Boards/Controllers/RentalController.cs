@@ -76,38 +76,67 @@ namespace Surf_Boards.Controllers
             }
         }
 
-        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Guid id, DateTime rentalDate)
+        public async Task<IActionResult> Create(Guid id, string rentalName, string rentalPhone, DateTime rentalDate)
         {
 
-            var board = await _context.SurfBoard.FindAsync(id);
-            var user = await _userManager.GetUserAsync(User);
-            //var userIp = HttpContext.Connection.RemoteIpAddress.ToString();
-            var userIp = "123.123.123.123";
-
-            // Look up if IP has X records already
-            var rentals = _context.Rental;
-            int amountOfRentalsFromIp = rentals.Count(r => r.UserIp == userIp);
-
-            if(!_signInManager.IsSignedIn(User) && amountOfRentalsFromIp >= 3)
+            if(_signInManager.IsSignedIn(User))
             {
-                TempData["WarningMessage"] = "Du har nået max antal af udlejninger. Log venligst ind hvis du ønsker at leje flere boards!";
-                return RedirectToAction(nameof(Index));
-            }
+                var board = await _context.SurfBoard.FindAsync(id);
+                var user = await _userManager.GetUserAsync(User);
+                rentalName = user.FirstName + " " + user.LastName;
+                rentalPhone = user.PhoneNumber;
+                //var userIp = HttpContext.Connection.RemoteIpAddress.ToString();
+                var userIp = "123.123.123.123";
 
-            // Checks succeeded, create new rental
-            Guid rentalId = Guid.NewGuid();
-            Rental rental = new Rental(rentalId, rentalDate, id, user.Id, userIp);
-            
-            if(ModelState.IsValid) { 
-                _context.Add(rental);
-                await _context.SaveChangesAsync();
-                TempData["SuccessMessage"] = "Udlejning oprettet ✅";
-                return RedirectToAction("Index");
+                // Look up if IP has X records already
+                var rentals = _context.Rental;
+                int amountOfRentalsFromIp = rentals.Count(r => r.UserIp == userIp);
+
+                // Checks succeeded, create new rental
+                Guid rentalId = Guid.NewGuid();
+                Rental rental = new Rental(rentalId, rentalName, rentalPhone, rentalDate, id, user.Id, userIp);
+
+                if (ModelState.IsValid)
+                {
+                    _context.Add(rental);
+                    await _context.SaveChangesAsync();
+                    TempData["SuccessMessage"] = "Udlejning oprettet ✅";
+                    return RedirectToAction("Index");
+                }
+                return View();
+
+            } else {
+
+                var board = await _context.SurfBoard.FindAsync(id);
+                //var userIp = HttpContext.Connection.RemoteIpAddress.ToString();
+                var userIp = "123.123.123.123";
+
+                // Look up if IP has X records already
+                var rentals = _context.Rental;
+                int amountOfRentalsFromIp = rentals.Count(r => r.UserIp == userIp);
+
+                if (amountOfRentalsFromIp >= 3)
+                {
+                    TempData["WarningMessage"] = "Du har nået max antal af udlejninger. Log venligst ind hvis du ønsker at leje flere boards!";
+                    return RedirectToAction("Index", "Home");
+                }
+
+                // Checks succeeded, create new rental
+                Guid rentalId = Guid.NewGuid();
+                Rental rental = new Rental(rentalId, rentalName, rentalPhone, rentalDate, id, null, userIp);
+
+                if (ModelState.IsValid)
+                {
+                    _context.Add(rental);
+                    await _context.SaveChangesAsync();
+                    TempData["SuccessMessage"] = "Udlejning oprettet ✅";
+                    return RedirectToAction("Index", "Home");
+                }
+                return RedirectToAction("Index", "Home");
+
             }
-            return View();
 
         }
 

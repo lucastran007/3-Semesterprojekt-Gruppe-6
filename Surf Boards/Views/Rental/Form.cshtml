@@ -1,7 +1,68 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model Surf_Boards.Models.Domain.Rental
+
 @{
+	ViewData["Title"] = "Create Rental";
 }
 
-Bla bla bla
+<h1>Create</h1>
+
+<div class="form-group">
+	<form asp-action="Create">
+		<input type="hidden" asp-for="RentalId" />
+
+		<div class="form-group">
+                <label asp-for="RentalName" class="control-label">Your fullname</label>
+                <input asp-for="RentalName" class="form-control" required/>
+                <span asp-validation-for="RentalName" class="text-danger"></span>
+        </div>
+
+		<div class="form-group">
+                <label asp-for="RentalPhone" class="control-label">Your phone number</label>
+                <input asp-for="RentalPhone" class="form-control" required/>
+                <span asp-validation-for="RentalPhone" class="text-danger"></span>
+        </div>
+
+		<label asp-for="RentalDate" class="control-label">Date for rental</label>
+		<div class="input-group date" id="datepicker">
+			<input asp-for="RentalDate" type="text" class="form-control" value="@DateTime.Now.ToString("DD-MM-YYYY")" />
+			<span class="input-group-addon">
+				<span class="glyphicon glyphicon-calendar"> </span>
+			</span>
+		</div>
+		<span asp-validation-for="RentalDate" class="text-danger"></span>
+
+		<div class="form-group">
+			<input type="submit" value="Save" class="btn btn-primary" />
+		</div>
+	</form>
+</div>
+
+
+<div>
+	<a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts{
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
+
+	@* TODO;
+		Fetch dates that the board is already rented, and disable those in the picker
+		https://getdatepicker.com/4/#enableddisabled-dates
+	*@
+	<script>
+		$(function () {
+			$('#datepicker').datetimepicker({
+				format: 'DD-MM-YYYY',
+				disabledDates: [
+                     moment("12/24/2022"),
+                 ]
+			});
+
+		});
+	</script>
+}
