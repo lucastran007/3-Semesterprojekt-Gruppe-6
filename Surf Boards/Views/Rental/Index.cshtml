@@ -11,6 +11,11 @@
 		<b>@TempData["SuccessMessage"]</b>
 	</div>
 }
+@if (TempData["WarningMessage"] != null) {
+	<div class="alert alert-danger">
+		<b>@TempData["WarningMessage"]</b>
+	</div>
+}
 
 <table class="table">
 	<thead>

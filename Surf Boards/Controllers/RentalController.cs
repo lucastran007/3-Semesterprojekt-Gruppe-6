@@ -16,11 +16,13 @@ namespace Surf_Boards.Controllers
     {
         private readonly Surf_BoardsContext _context;
         private readonly UserManager<Surf_BoardsUser> _userManager;
+        private readonly SignInManager<Surf_BoardsUser> _signInManager;
 
-        public RentalController(Surf_BoardsContext context, UserManager<Surf_BoardsUser> userManager)
+        public RentalController(Surf_BoardsContext context, UserManager<Surf_BoardsUser> userManager, SignInManager<Surf_BoardsUser> signInManager)
         {
             _context = context;
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public async Task<IActionResult> IndexAsync()
@@ -77,6 +79,17 @@ namespace Surf_Boards.Controllers
             //var userIp = HttpContext.Connection.RemoteIpAddress.ToString();
             var userIp = "123.123.123.123";
 
+            // Look up if IP has X records already
+            var rentals = _context.Rental;
+            int amountOfRentalsFromIp = rentals.Count(r => r.UserIp == userIp);
+
+            if(!_signInManager.IsSignedIn(User) && amountOfRentalsFromIp >= 3)
+            {
+                TempData["WarningMessage"] = "Du har nået max antal af udlejninger. Log venligst ind hvis du ønsker at leje flere boards!";
+                return RedirectToAction(nameof(Index));
+            }
+
+            // Checks succeeded, create new rental
             Guid rentalId = Guid.NewGuid();
             Rental rental = new Rental(rentalId, rentalDate, id, user.Id, userIp);
             
