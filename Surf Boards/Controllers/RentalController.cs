@@ -65,7 +65,15 @@ namespace Surf_Boards.Controllers
         //get Rental/create
         public IActionResult Create()
         {
-            return View();
+            // Not signed in, return a form view
+            if (!_signInManager.IsSignedIn(User))
+            {
+                return View("Form");
+            } else
+            {
+                // Signed in
+                return View();
+            }
         }
 
         [Authorize]
