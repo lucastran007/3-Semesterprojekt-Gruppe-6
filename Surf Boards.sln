@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surf Boards", "Surf Boards\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surf Boards API", "Surf Boards API\Surf Boards API.csproj", "{FC5825B5-5BF9-46D5-A5A7-F0A3067AB1C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Surf Boards Blazor", "Surf Boards Blazor\Surf Boards Blazor.csproj", "{74A30297-C3B6-428E-999C-8E5B2346093C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surf Boards Blazor", "Surf Boards Blazor\Surf Boards Blazor.csproj", "{74A30297-C3B6-428E-999C-8E5B2346093C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
