@@ -20,7 +20,8 @@ namespace Surf_Boards_API.Controllers
         // Get all Rentals 
         [HttpGet]
         public async Task<IActionResult> GetRentals()
-        { var rentals = await _context.Rental.ToArrayAsync();
+        { 
+            var rentals = await _context.Rental.ToArrayAsync();
             return Ok(rentals);
         }
 

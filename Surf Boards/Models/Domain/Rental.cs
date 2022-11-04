@@ -22,7 +22,7 @@ namespace Surf_Boards.Models.Domain
         public Guid SurfboardId { get; set; }
 
         //[Required]
-        public string? UserId { get; set;  }
+        public string? UserId { get; set; }
 
         [Required]
         public string UserIp { get; set; }
