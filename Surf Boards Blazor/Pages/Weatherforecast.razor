@@ -1,24 +1,14 @@
-﻿@page "/fetchdata"
+﻿@page "/weatherforecasts"
 @inject HttpClient Http
 @using System.Text.Json
 @using System.Text.Json.Serialization;
 
-<PageTitle>Weather forecast</PageTitle>
-
-<h1>Weather forecast</h1>
-
-<p>This component demonstrates fetching data from the server.</p>
-
-<label>
-    <h3>Søg</h3>
-    <input type="text" @bind="SearchString" @bind:event="oninput" @onkeyup="@PerformSearch" />
-</label>
-
+<h3>Weatherforecast</h3>
 @if (forecasts == null)
 {
     <p><em>Loading...</em></p>
 }
-else
+else 
 {
     <table class="table">
         <thead>
@@ -34,41 +24,32 @@ else
             @foreach (var forecast in forecasts.list)
             {
                 var date = forecast.dt_txt;
-                var tempC = Math.Floor( forecast.main.temp - 273.15 );
-                var tempF = Math.Floor( 1.8*(forecast.main.temp-273) + 32 );
+                var tempC = Math.Floor(forecast.main.temp - 273.15);
+                var tempF = Math.Floor(1.8 * (forecast.main.temp - 273) + 32);
                 var summary = "Pisse godt vejr";
                 if (tempC < 10)
                     summary = "Pisse dårligt vejr";
 
-                    <tr>
-                        <td>@date</td>
-                        <td>@tempC C</td>
-                        <td>@tempF F</td>
-                        <td>@summary</td>
-                    </tr>
+                <tr>
+                    <td>@date</td>
+                    <td>@tempC C</td>
+                    <td>@tempF F</td>
+                    <td>@summary</td>
+                </tr>
             }
         </tbody>
     </table>
 }
 
-@code {
+@code { 
     private Root? forecasts;
-    private string SearchString = "Odense";
-
-    protected override async Task OnInitializedAsync()
-    {
+    protected override async Task OnInitializedAsync(){
         var json = await Http.GetStringAsync($"https://api.openweathermap.org/data/2.5/forecast?q=Odense&appid=544ad375f5007cc6a734fd13b0a0f8fe");
         forecasts = JsonSerializer.Deserialize<Root>(json);
     }
-
-    public async Task PerformSearch()
-    {
-        var json = await Http.GetStringAsync($"https://api.openweathermap.org/data/2.5/forecast?q={SearchString}&appid=544ad375f5007cc6a734fd13b0a0f8fe");
-        forecasts = JsonSerializer.Deserialize<Root>(json);
-    }
-
     
-    public class Clouds {
+
+     public class Clouds {
         public int all { get; set; }
     }
 
@@ -145,3 +126,4 @@ else
         public City city { get; set; }
     }
 }
+
