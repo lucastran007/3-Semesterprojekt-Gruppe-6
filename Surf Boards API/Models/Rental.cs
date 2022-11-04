@@ -11,7 +11,7 @@ namespace Surf_Boards_API.Models
         [Required]
         public Guid SurfboardId { get; set; }
 
-        [Required]
+        //[Required]
         public string UserId { get; set; }
 
 
