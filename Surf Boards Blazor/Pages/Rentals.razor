@@ -1,0 +1,54 @@
+﻿@page "/rentals"
+@inject HttpClient Http
+
+<PageTitle>Rentals</PageTitle>
+
+<h1>Current rentals</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+@if (rentals == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>RentalId</th>
+                <th>SurfboardId</th>
+                <th>UserId</th>
+                <th>RentalDate</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var rental in rentals)
+            {
+                <tr>
+                    <td>@rental.RentalId</td>
+                    <td>@rental.SurfboardId</td>
+                    <td>@rental.UserId</td>
+                    <td>@rental.RentalDate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private Rental[]? rentals;
+
+    protected override async Task OnInitializedAsync()
+    {
+        rentals = await Http.GetFromJsonAsync<Rental[]>("https://localhost:7187/api/v2/rental/");
+    }
+
+    public class Rental
+    {
+        public Guid RentalId { get; set; }
+        public Guid SurfboardId { get; set; }
+        public string UserId { get; set; }
+        public DateTime RentalDate { get; set; }
+    }
+}

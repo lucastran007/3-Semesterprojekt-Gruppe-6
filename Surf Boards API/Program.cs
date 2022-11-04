@@ -29,8 +29,20 @@ builder.Services.AddApiVersioning(opt =>
 builder.Services.AddDbContext<Surf_BoardsContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Surf_BoardsContext") ?? throw new InvalidOperationException("Connection string 'Surf_BoardsContext' not found.")));
 
+// CORS Policies
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost" || new Uri(origin).Host == "myweb.local");
+    });
+});
 
 var app = builder.Build();
+
+// Enable Cors
+app.UseCors();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
