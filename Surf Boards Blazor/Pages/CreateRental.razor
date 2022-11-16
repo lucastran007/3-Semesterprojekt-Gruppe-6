@@ -1,0 +1,14 @@
+﻿@page "/createrentals"
+<h3>CreateRental</h3>
+<input type="date" value="RentalDate"/>
+<input type="id" value="SurfboardId" />
+<input type="id" value="RentalId" />
+<input type="id" value="UserId" />
+
+
+@code {
+    public Guid RentalId { get; set; }
+    public Guid SurfboardId { get; set; }
+    public string UserId { get; set; }
+    public DateTime RentalDate { get; set; } = new DateTime(DateTime.Now.Year);
+}
