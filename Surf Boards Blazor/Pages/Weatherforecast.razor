@@ -3,127 +3,131 @@
 @using System.Text.Json
 @using System.Text.Json.Serialization;
 
-<h3>Weatherforecast</h3>
+<PageTitle>Weather forecast</PageTitle>
+
+<h1>Weather forecast</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+<label>
+    <h3>Antal daeg for vejrudsigt</h3>
+    <input type="text" @bind="Days" @bind:event="oninput" @onkeyup="@PerformSearch" />
+</label>
+
 @if (forecasts == null)
 {
     <p><em>Loading...</em></p>
 }
-else 
+else
 {
     <table class="table">
         <thead>
             <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
+                <th>time</th>
+                <th>Temp</th>
+                <th>Chance for rain</th>
+                <th>Rain amount</th>
+                <th>Description</th>
+
             </tr>
         </thead>
         <tbody>
-
-            @foreach (var forecast in forecasts.list)
+            @foreach (var forecast in forecasts.data)
             {
-                var date = forecast.dt_txt;
-                var tempC = Math.Floor(forecast.main.temp - 273.15);
-                var tempF = Math.Floor(1.8 * (forecast.main.temp - 273) + 32);
-                var summary = "Pisse godt vejr";
-                if (tempC < 10)
-                    summary = "Pisse dårligt vejr";
-
                 <tr>
-                    <td>@date</td>
-                    <td>@tempC C</td>
-                    <td>@tempF F</td>
-                    <td>@summary</td>
+                    <td>@forecast.datetime</td>
+                    <td>@forecast.temp</td>
+                    <td>@forecast.pop</td>
+                    <td>@forecast.precip</td>
+                    <td>@forecast.weather.description</td>
                 </tr>
             }
+
         </tbody>
+
     </table>
 }
 
-@code { 
+@code {
     private Root? forecasts;
-    protected override async Task OnInitializedAsync(){
-        var json = await Http.GetStringAsync($"https://api.openweathermap.org/data/2.5/forecast?q=Odense&appid=544ad375f5007cc6a734fd13b0a0f8fe");
+    private string Days = "7";
+
+    protected override async Task OnInitializedAsync()
+    {
+        var json = await Http.GetStringAsync($"https://api.weatherbit.io/v2.0/forecast/daily?lat=55.39&lon=10.38&days=7&key=dcfd41b5500b480f98dd74b83df8eeb2");
         forecasts = JsonSerializer.Deserialize<Root>(json);
     }
-    
 
-     public class Clouds {
-        public int all { get; set; }
+    public async Task PerformSearch()
+    {
+        var json = await Http.GetStringAsync($"https://api.weatherbit.io/v2.0/forecast/daily?lat=55.39&lon=10.38&days={Days}&key=dcfd41b5500b480f98dd74b83df8eeb2");
+        forecasts = JsonSerializer.Deserialize<Root>(json);
     }
 
-    public class City {
-        public int id { get; set; }
-        public string name { get; set; }
-        public Coord coord { get; set; }
-        public string country { get; set; }
-        public int population { get; set; }
-        public int timezone { get; set; }
-        public int sunrise { get; set; }
-        public int sunset { get; set; }
-    }
 
-    public class Coord {
-        public double lon { get; set; }
-        public double lat { get; set; }
-    }
-
-    public class Main {
+    // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
+    public class Datum
+    {
+        public double app_max_temp { get; set; }
+        public double app_min_temp { get; set; }
+        public int clouds { get; set; }
+        public int clouds_hi { get; set; }
+        public int clouds_low { get; set; }
+        public int clouds_mid { get; set; }
+        public string datetime { get; set; }
+        public double dewpt { get; set; }
+        public double high_temp { get; set; }
+        public double low_temp { get; set; }
+        public object max_dhi { get; set; }
+        public double max_temp { get; set; }
+        public double min_temp { get; set; }
+        public double moon_phase { get; set; }
+        public double moon_phase_lunation { get; set; }
+        public int moonrise_ts { get; set; }
+        public int moonset_ts { get; set; }
+        public double ozone { get; set; }
+        public int pop { get; set; }
+        public double precip { get; set; }
+        public double pres { get; set; }
+        public int rh { get; set; }
+        public double slp { get; set; }
+        public int snow { get; set; }
+        public int snow_depth { get; set; }
+        public int sunrise_ts { get; set; }
+        public int sunset_ts { get; set; }
         public double temp { get; set; }
-        public double feels_like { get; set; }
-        public double temp_min { get; set; }
-        public double temp_max { get; set; }
-        public int pressure { get; set; }
-        public int sea_level { get; set; }
-        public int grnd_level { get; set; }
-        public int humidity { get; set; }
-        public double temp_kf { get; set; }
+        public int ts { get; set; }
+        public double uv { get; set; }
+        public string valid_date { get; set; }
+        public double vis { get; set; }
+        public Weather weather { get; set; }
+        public string wind_cdir { get; set; }
+        public string wind_cdir_full { get; set; }
+        public int wind_dir { get; set; }
+        public double wind_gust_spd { get; set; }
+        public double wind_spd { get; set; }
     }
 
-    public class List {
-        public int dt { get; set; }
-        public Main main { get; set; }
-        public List<Weather> weather { get; set; }
-        public Clouds clouds { get; set; }
-        public Wind wind { get; set; }
-        public int visibility { get; set; }
-        public double pop { get; set; }
-        public Rain rain { get; set; }
-        public Sys sys { get; set; }
-        public string dt_txt { get; set; }
+    public class Root
+    {
+        public string city_name { get; set; }
+        public string country_code { get; set; }
+        public List<Datum> data { get; set; }
+        public double lat { get; set; }
+        public double lon { get; set; }
+        public string state_code { get; set; }
+        public string timezone { get; set; }
     }
 
-    public class Rain {
-        public double _3h { get; set; }
-    }
-
-    public class Sys {
-        public int type { get; set; }
-        public int id { get; set; }
-        public string country { get; set; }
-        public int sunrise { get; set; }
-        public int sunset { get; set; }
-    }
-
-    public class Weather {
-        public int id { get; set; }
-        public string main { get; set; }
-        public string description { get; set; }
+    public class Weather
+    {
         public string icon { get; set; }
+        public string description { get; set; }
+        public int code { get; set; }
     }
 
-    public class Wind {
-        public double speed { get; set; }
-        public int deg { get; set; }
-    }
 
-    public class Root {
-        public string cod { get; set; }
-        public int message { get; set; }
-        public int cnt { get; set; }
-        public List<List> list { get; set; }
-        public City city { get; set; }
-    }
+
+
+
 }
-
