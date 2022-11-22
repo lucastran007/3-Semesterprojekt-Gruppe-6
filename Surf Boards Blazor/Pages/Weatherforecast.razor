@@ -50,7 +50,7 @@ else
 
 @code {
     private Root? forecasts;
-    private string Days = "7";
+    private string Days = "";
 
     protected override async Task OnInitializedAsync()
     {
@@ -91,8 +91,8 @@ else
         public double pres { get; set; }
         public int rh { get; set; }
         public double slp { get; set; }
-        public int snow { get; set; }
-        public int snow_depth { get; set; }
+        public double snow { get; set; }
+        public double snow_depth { get; set; }
         public int sunrise_ts { get; set; }
         public int sunset_ts { get; set; }
         public double temp { get; set; }
@@ -121,10 +121,11 @@ else
 
     public class Weather
     {
-        public string icon { get; set; }
         public string description { get; set; }
         public int code { get; set; }
+        public string icon { get; set; }
     }
+
 
 
 
