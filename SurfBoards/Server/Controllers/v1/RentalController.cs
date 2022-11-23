@@ -1,18 +1,18 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Surf_Boards.Data;
+using SurfBoards.Server.Data;
 using SurfBoards.Shared;
 
-namespace Surf_Boards_API.Controllers
+namespace SurfBoards.Server.Controllers
 {
-    [ApiVersion("2")]
+    [ApiVersion("1")]
     [Route("api/v{version:apiVersion}/rental")]
     [ApiController]
-    public class RentalV2Controller : ControllerBase
+    public class RentalV1Controller : ControllerBase
     {
         private readonly Surf_BoardsContext _context;
-        public RentalV2Controller(Surf_BoardsContext context)
+        public RentalV1Controller(Surf_BoardsContext context)
         {
             _context = context;
         }
@@ -20,8 +20,7 @@ namespace Surf_Boards_API.Controllers
         // Get all Rentals 
         [HttpGet]
         public async Task<IActionResult> GetRentals()
-        { 
-            var rentals = await _context.Rental.ToArrayAsync();
+        { var rentals = await _context.Rental.ToArrayAsync();
             return Ok(rentals);
         }
 
@@ -32,7 +31,6 @@ namespace Surf_Boards_API.Controllers
             var rental = await _context.Rental.FindAsync(id);
             if (rental == null)
                 return NotFound();
-
             return Ok(rental);
         }
 

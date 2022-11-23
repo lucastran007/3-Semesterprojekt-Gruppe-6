@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SurfBoards.Shared;
 
-namespace Surf_Boards.Data {
+namespace SurfBoards.Server.Data
+{
     public class Surf_BoardsContext : DbContext 
         {
             public Surf_BoardsContext(DbContextOptions<Surf_BoardsContext> options) : base(options) {

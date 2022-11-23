@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Surf_Boards.Data;
-using Surf_Boards_API.Models;
+using SurfBoards.Shared;
 
 namespace Surf_Boards_API.Controllers
 {

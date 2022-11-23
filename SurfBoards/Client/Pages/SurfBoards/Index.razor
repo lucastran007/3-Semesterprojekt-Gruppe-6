@@ -1,4 +1,6 @@
 ﻿@page "/surfboards"
+@using SurfBoards.Shared
+
 @inject HttpClient Http
 
 <PageTitle>Surfboards</PageTitle>
@@ -7,6 +9,13 @@
 
 <p>This component demonstrates fetching data from the server.</p>
 
+<button @onclick="WeatherforecastModal">
+    weatherforecast 
+</button>
+@if (weatherforecast)
+{
+    <Weatherforecast @WeatherforecastModal="WeatherforecastModal"></Weatherforecast>
+}
 @if (surfboards == null)
 {
     <p><em>Loading...</em></p>
@@ -43,6 +52,11 @@ else
     {
         surfboards = await Http.GetFromJsonAsync<Surfboard[]>("https://localhost:7187/api/v2/surfboards/");
     }
+    private bool weatherforecast = false;
+    public void WeatherforecastModal()
+    {
+        weatherforecast = !weatherforecast;
+    } 
 
-   
+
 }

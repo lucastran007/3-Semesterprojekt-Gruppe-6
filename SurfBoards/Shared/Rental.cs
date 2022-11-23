@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Surf_Boards_API.Models
+namespace SurfBoards.Shared
 {
     public class Rental
     {
@@ -18,7 +22,7 @@ namespace Surf_Boards_API.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime RentalDate { get; set; }
-       
+
 
 
         public Rental(Guid rentalId, DateTime rentalDate, Guid surfboardId, string userId)
@@ -27,8 +31,7 @@ namespace Surf_Boards_API.Models
             RentalDate = rentalDate;
             SurfboardId = surfboardId;
             UserId = userId;
-            
+
         }
     }
 }
-

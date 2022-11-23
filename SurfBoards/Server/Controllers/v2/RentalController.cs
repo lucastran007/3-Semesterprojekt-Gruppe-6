@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Surf_Boards.Data;
+using SurfBoards.Server.Data;
 using SurfBoards.Shared;
 
-namespace Surf_Boards_API.Controllers
+namespace SurfBoards.Server.Controllers
 {
     [ApiVersion("2")]
     [Route("api/v{version:apiVersion}/rental")]
