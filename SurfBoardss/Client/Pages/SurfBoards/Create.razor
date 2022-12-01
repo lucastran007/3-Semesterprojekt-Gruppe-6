@@ -1,0 +1,77 @@
+﻿@page "/create"
+@using SurfBoardss.Shared
+@inject HttpClient Http
+@inject NavigationManager navigationManager
+
+
+
+<h3>Create Surfboard</h3>
+
+<hr />
+<div class="row">
+    <EditForm class="container" Model="SelectedSurfboard" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="form-group">
+            <label>Name</label>
+            <input @bind-value="SelectedSurfboard.BoardName" class="form-control" required/>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Length</label>
+            <input @bind-value="SelectedSurfboard.Length" class="form-control" required />
+            <span asp-validation-for="Length" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Width</label>
+            <input @bind-value="SelectedSurfboard.Width" class="form-control" required />
+            <span asp-validation-for="Width" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Thickness</label>
+            <input @bind-value="SelectedSurfboard.Thickness" class="form-control" required />
+            <span asp-validation-for="Thickness" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Volume</label>
+            <input @bind-value="SelectedSurfboard.Volume" class="form-control" required />
+            <span asp-validation-for="Volume" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Boardtype</label>
+            <input @bind-value="SelectedSurfboard.Boardtype" class="form-control" required />
+            <span asp-validation-for="Boardtype" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Price</label>
+            <input @bind-value="SelectedSurfboard.Price" class="form-control" required />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-success">Opret</button>
+        </div>
+    </EditForm>
+
+</div>
+
+@code {
+    private SurfBoard SelectedSurfboard = new SurfBoard();
+
+
+
+    public async Task HandleValidSubmit()
+    {
+        //if((await Http.GetFromJsonAsync<string>("api/role")).ToLower() == "udlejer"){
+        //    SelectedBoard.ApplicationUserId = await Http.GetFromJsonAsync<string>("api/userid");
+        //}
+        HttpResponseMessage response;
+        response = await Http.PostAsJsonAsync<SurfBoard>("https://localhost:7244/api/Boards/create", SelectedSurfboard);
+
+        if (response.IsSuccessStatusCode)
+        {
+            navigationManager.NavigateTo("/surfboards");
+        }
+
+    }
+
+}

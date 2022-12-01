@@ -1,0 +1,99 @@
+﻿@page "/edit/{ID:int}"
+@using SurfBoardss.Shared
+@inject HttpClient Http
+@inject NavigationManager navigationManager
+
+
+
+
+<h3>Edit</h3>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <EditForm class="container" Model="surfBoard" OnValidSubmit="HandleValidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div class="form-group">
+                <label>Name</label>
+                <input @bind-value="surfBoard.BoardName" class="form-control" required/>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                <label>Length</label>
+                <input @bind-value="surfBoard.Length" class="form-control" required />
+                <span asp-validation-for="Length" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Width</label>
+                <input @bind-value="surfBoard.Width" class="form-control" required />
+                <span asp-validation-for="Width" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Thickness</label>
+                <input @bind-value="surfBoard.Thickness" class="form-control" required />
+                <span asp-validation-for="Thickness" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Volume</label>
+                <input @bind-value="surfBoard.Volume" class="form-control" required />
+                <span asp-validation-for="Volume" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Boardtype</label>
+                <input @bind-value="surfBoard.Boardtype" class="form-control" required />
+                <span asp-validation-for="Boardtype" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Price</label>
+                <input @bind-value="surfBoard.Price" class="form-control" required />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">Rediger</button>
+
+            </div>
+        </EditForm> 
+        <div>
+            <a @onclick="BackToList" class="btn-link">Tilbage til oversigt</a>
+        </div>
+
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int ID { get; set; }
+    private SurfBoard surfBoard { get; set; } = new SurfBoard();
+    string URL = "";
+
+
+
+
+
+    //Ikke rigtig addresse
+    protected async override Task OnInitializedAsync()
+    {
+        ID = ID;
+        URL = $"https://localhost:7244/api/Boards/{ID}?api-version=2.0"; 
+        surfBoard = await Http.GetFromJsonAsync<SurfBoard>(URL);
+    }
+
+    public async Task HandleValidSubmit()
+    {
+        HttpResponseMessage response;
+        response = await Http.PostAsJsonAsync<SurfBoard>($"https://localhost:7244/api/Boards/edit/{ID}", surfBoard);
+
+        if (response.IsSuccessStatusCode)
+        {
+            navigationManager.NavigateTo("/surfboards");
+        }
+
+    }
+    
+    public void BackToList()
+    {
+        navigationManager.NavigateTo("/surfboards");
+    }
+}

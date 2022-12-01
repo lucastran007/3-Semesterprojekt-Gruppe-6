@@ -2,6 +2,8 @@
 @using SurfBoardss.Shared
 
 @inject HttpClient Http
+@inject NavigationManager navigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <PageTitle>Surfboards</PageTitle>
 
@@ -22,6 +24,11 @@
 }
 else
 {
+    <AuthorizeView Roles="Admin,Udlejer">
+        <p>
+            <button @onclick="Create" class="btn btn-primary">Opret ny</button>
+        </p>
+    </AuthorizeView>
     <table class="table">
         <thead>
             <tr>
@@ -39,7 +46,22 @@ else
                     <td>@surfboard.BoardName</td>
                     <td>@surfboard.Boardtype</td>
                     <td>@surfboard.Price</td>
-                </tr>
+
+
+                    <td>
+                        <button @onclick="() => Rent(surfboard.Id)">Rent</button>|
+                        <button @onclick="() => Details(surfboard.Id)">Details</button>
+                    </td>
+               
+                    <AuthorizeView Roles="Admin">
+                        <td>
+                            <button @onclick="() => Edit(surfboard.Id)">Edit</button>|
+                            <button @onclick="() => Delete(surfboard.Id)">Delete</button>
+                        </td>
+                    </AuthorizeView>                  
+                    
+
+                 </tr>
             }
         </tbody>
     </table>
@@ -59,4 +81,31 @@ else
     } 
 
 
+    private void Rent(Guid ID)
+    {
+      
+    }
+
+    private void Create(){
+        navigationManager.NavigateTo("/create");
+    }
+ 
+    private void Details(Guid ID)
+    {
+        navigationManager.NavigateTo($"/details/{ID}");
+    }
+    private void Edit(Guid ID)
+    {
+        navigationManager.NavigateTo($"/edit/{ID}");
+    }
+    private void Delete(Guid ID)
+    {
+        navigationManager.NavigateTo($"/delete/{ID}");
+    }
+
+    //private async Task<bool> isAuthenticated()
+    //{
+    //    var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+    //    return authenticationState.User.Identity.IsAuthenticated;
+    //}
 }

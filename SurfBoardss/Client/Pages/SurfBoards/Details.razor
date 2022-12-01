@@ -1,0 +1,69 @@
+﻿@page "/details/{ID:int}"
+@using SurfBoardss.Shared
+@inject HttpClient Http
+@inject NavigationManager navigationManager
+
+
+<h3>Details</h3>
+
+@if (surfboards == null)
+{
+ <div>
+     <hr />
+     <dl class="row">
+        <dt class="col-sm-2">Name</dt>
+            <dd class="col-sm-10">@surfboards.BoardName</dd>
+
+        <dt class="col-sm-2">Length</dt>
+            <dd class="col-sm-10">@surfboards.Length</dd>
+
+        <dt class="col-sm-2">Width</dt>
+            <dd class="col-sm-10">@surfboards.Width</dd>
+
+        <dt class="col-sm-2">Thickness</dt>
+            <dd class="col-sm-10">@surfboards.Thickness</dd>
+
+        <dt class="col-sm-2">Volume</dt>
+            <dd class="col-sm-10">@surfboards.Volume</dd>
+
+        <dt class="col-sm-2">Boardtype</dt>
+            <dd class="col-sm-10">@surfboards.Boardtype</dd>
+
+        <dt class="col-sm-2">Price</dt>
+            <dd class="col-sm-10">@surfboards.Price</dd>
+     </dl>
+ </div>
+ <div>
+     <a @onclick="BackToList" class="btn-link">Back to overview</a>
+ </div>
+}
+else
+{
+<div>Surfboard not found</div>
+}
+
+
+@code {
+
+    [Parameter]
+    public int ID { get; set; }
+
+    private SurfBoard? surfboards;
+    string URL = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        ID = ID;
+        URL = $"https://localhost:7187/api/surfboards/{ID}";
+        surfboards = await Http.GetFromJsonAsync<SurfBoard>(URL);
+    }
+
+
+
+    public void BackToList()
+    {
+        navigationManager.NavigateTo("/surfboards");
+    }
+
+
+}

@@ -9,11 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surf Boards API", "Surf Boa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surf Boards Blazor", "Surf Boards Blazor\Surf Boards Blazor.csproj", "{74A30297-C3B6-428E-999C-8E5B2346093C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurfBoardss.Server", "SurfBoardss\Server\SurfBoardss.Server.csproj", "{D289A0D3-E889-4F7B-92F2-F489DE1A5F04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SurfBoardss.Server", "SurfBoardss\Server\SurfBoardss.Server.csproj", "{D289A0D3-E889-4F7B-92F2-F489DE1A5F04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurfBoardss.Client", "SurfBoardss\Client\SurfBoardss.Client.csproj", "{A45D9AB9-7F6B-4329-859D-AB4019ADFA9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SurfBoardss.Client", "SurfBoardss\Client\SurfBoardss.Client.csproj", "{A45D9AB9-7F6B-4329-859D-AB4019ADFA9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurfBoardss.Shared", "SurfBoardss\Shared\SurfBoardss.Shared.csproj", "{68815448-3D0C-4997-995D-DB2FF8241134}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SurfBoardss.Shared", "SurfBoardss\Shared\SurfBoardss.Shared.csproj", "{68815448-3D0C-4997-995D-DB2FF8241134}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
