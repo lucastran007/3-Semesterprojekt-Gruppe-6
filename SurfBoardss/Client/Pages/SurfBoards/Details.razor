@@ -1,4 +1,4 @@
-﻿@page "/details/{ID:int}"
+﻿@page "/details/{ID:guid}"
 @using SurfBoardss.Shared
 @inject HttpClient Http
 @inject NavigationManager navigationManager
@@ -6,7 +6,7 @@
 
 <h3>Details</h3>
 
-@if (surfboards == null)
+@if (surfboards != null)
 {
  <div>
      <hr />
@@ -46,7 +46,7 @@ else
 @code {
 
     [Parameter]
-    public int ID { get; set; }
+    public Guid ID { get; set; }
 
     private SurfBoard? surfboards;
     string URL = "";
@@ -54,11 +54,11 @@ else
     protected override async Task OnInitializedAsync()
     {
         ID = ID;
-        URL = $"https://localhost:7187/api/surfboards/{ID}";
+        URL = $"https://localhost:7187/api/v2/surfboards/{ID}";
         surfboards = await Http.GetFromJsonAsync<SurfBoard>(URL);
     }
 
-
+    //https://localhost:7187/api/v2/surfboards/
 
     public void BackToList()
     {

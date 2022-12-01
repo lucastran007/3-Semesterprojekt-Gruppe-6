@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SurfBoardss.Server.Data;
+using SurfBoardss.Shared;
 
 namespace SurfBoardss.Server.Controllers {
 
@@ -31,6 +32,22 @@ namespace SurfBoardss.Server.Controllers {
 
             return Ok(surfboard);
         }
-        
+
+        [HttpPost("updateboard/{id}")]
+        public async Task<IActionResult> Edit(Guid id, [FromBody] SurfBoard surfboards)
+        {
+            try
+            {
+                _context.Update(surfboards);
+                await _context.SaveChangesAsync();
+                return Ok(surfboards);
+            }
+
+            catch (Exception e)
+            {
+                return Conflict(e.Message);
+            }
+        }
+
     }
 }

@@ -1,4 +1,4 @@
-﻿@page "/delete/{ID:int}"
+﻿@page "/delete/{ID:guid}"
 @using SurfBoardss.Shared
 @inject HttpClient Http
 @inject NavigationManager navigationManager
@@ -37,7 +37,7 @@
 
 
     [Parameter]
-    public int ID { get; set; }
+    public Guid ID { get; set; }
 
     private SurfBoard? surfBoard;
     string URL = "";

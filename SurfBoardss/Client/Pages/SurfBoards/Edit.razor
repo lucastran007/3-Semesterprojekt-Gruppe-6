@@ -1,4 +1,4 @@
-﻿@page "/edit/{ID:int}"
+﻿@page "/edit/{ID:guid}"
 @using SurfBoardss.Shared
 @inject HttpClient Http
 @inject NavigationManager navigationManager
@@ -64,7 +64,7 @@
 
 @code {
     [Parameter]
-    public int ID { get; set; }
+    public Guid ID { get; set; }
     private SurfBoard surfBoard { get; set; } = new SurfBoard();
     string URL = "";
 
@@ -76,14 +76,14 @@
     protected async override Task OnInitializedAsync()
     {
         ID = ID;
-        URL = $"https://localhost:7244/api/Boards/{ID}?api-version=2.0"; 
+        URL = $"https://localhost:7187/api/v2/surfboards/{ID}";
         surfBoard = await Http.GetFromJsonAsync<SurfBoard>(URL);
     }
 
     public async Task HandleValidSubmit()
     {
         HttpResponseMessage response;
-        response = await Http.PostAsJsonAsync<SurfBoard>($"https://localhost:7244/api/Boards/edit/{ID}", surfBoard);
+        response = await Http.PostAsJsonAsync<SurfBoard>($"https://localhost:7187/api/v2/surfboards/updateboard/{ID}", surfBoard);
 
         if (response.IsSuccessStatusCode)
         {
