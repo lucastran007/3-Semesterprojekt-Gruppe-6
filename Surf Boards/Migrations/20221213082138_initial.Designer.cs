@@ -9,11 +9,11 @@ using Surf_Boards.Data;
 
 #nullable disable
 
-namespace Surf_Boards.Migrations.Surf_BoardsContext1Migrations
+namespace Surf_Boards.Migrations
 {
     [DbContext(typeof(Surf_BoardsContext1))]
-    [Migration("20220906093710_SeedUserRoleDAta")]
-    partial class SeedUserRoleDAta
+    [Migration("20221213082138_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

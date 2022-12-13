@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Surf_Boards.Migrations.Surf_BoardsContext1Migrations
+namespace Surf_Boards.Migrations
 {
-    public partial class InitSurf_BoardUser : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

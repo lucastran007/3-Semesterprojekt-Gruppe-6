@@ -1,11 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System.Collections.Generic;
 
 #nullable disable
 
-namespace Surf_Boards.Migrations.Surf_BoardsContext1Migrations
+namespace Surf_Boards.Migrations
 {
-    public partial class SeedUserRoleDAta : Migration
+    public partial class Seedroles : Migration
     {
         private string ManagerRoleId = Guid.NewGuid().ToString();
         private string UserRoleId = Guid.NewGuid().ToString();

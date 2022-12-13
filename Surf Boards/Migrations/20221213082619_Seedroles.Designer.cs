@@ -3,17 +3,19 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Surf_Boards.Data;
 
 #nullable disable
 
-namespace Surf_Boards.Migrations.Surf_BoardsContext1Migrations
+namespace Surf_Boards.Migrations
 {
     [DbContext(typeof(Surf_BoardsContext1))]
-    partial class Surf_BoardsContext1ModelSnapshot : ModelSnapshot
+    [Migration("20221213082619_Seedroles")]
+    partial class Seedroles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
