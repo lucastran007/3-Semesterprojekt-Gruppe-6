@@ -1,4 +1,5 @@
 ﻿using Blazor.Server.Models;
+using Blazor.Shared;
 using Duende.IdentityServer.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
@@ -13,5 +14,8 @@ namespace Blazor.Server.Data
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
+
+        public DbSet<SurfBoard> SurfBoard { get; set; }
+        public DbSet<Rental> Rental { get; set; }
     }
 }

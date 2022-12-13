@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Surf_Boards.Data;
@@ -12,6 +13,8 @@ namespace Surf_Boards_API.Controllers
     public class RentalV1Controller : ControllerBase
     {
         private readonly Surf_BoardsContext _context;
+
+
         public RentalV1Controller(Surf_BoardsContext context)
         {
             _context = context;

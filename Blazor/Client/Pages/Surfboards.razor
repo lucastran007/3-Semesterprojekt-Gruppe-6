@@ -1,0 +1,54 @@
+﻿@page "/surfboards"
+@inject HttpClient Http
+
+<PageTitle>Surfboards</PageTitle>
+
+<h1>Current surfboards</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+@if (surfboards == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Boardname</th>
+                <th>BoardType</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var surfboard in surfboards)
+            {
+                <tr>
+                    <td>@surfboard.Id</td>
+                    <td>@surfboard.BoardName</td>
+                    <td>@surfboard.BoardType</td>
+                    <td>@surfboard.Price</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private Surfboard[]? surfboards;
+
+    protected override async Task OnInitializedAsync()
+    {
+        surfboards = await Http.GetFromJsonAsync<Surfboard[]>("api/surfboard");
+    }
+
+    public class Surfboard
+    {
+        public Guid Id { get; set; }
+        public string BoardName { get; set; }
+        public string BoardType { get; set; }
+        public double Price { get; set; }
+    }
+}
