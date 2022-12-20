@@ -8,7 +8,9 @@ namespace Blazor.Server.Data.Seeders
 {
     public class SurfBoardSeeder
     {
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public static async void Initialize(IServiceProvider serviceProvider)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             IOptions<OperationalStoreOptions> operationalStoreOptions = serviceProvider.GetRequiredService<IOptions<OperationalStoreOptions>>();
             using (var context = new ApplicationDbContext(

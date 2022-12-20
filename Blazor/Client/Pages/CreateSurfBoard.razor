@@ -1,0 +1,36 @@
+﻿@page "/surfboard/create"
+@using Blazor.Shared
+@inject HttpClient Http
+@inject NavigationManager navManager
+
+
+<h3>CreateSurfBoard</h3>
+
+
+<input type="text" @bind-value="surfBoard.BoardName" />
+<input type="number" @bind-value="surfBoard.Length" />
+<input type="number" @bind-value="surfBoard.Width" />
+<input type="number" @bind-value="surfBoard.Thickness" />
+<input type="number" @bind-value="surfBoard.Volume" />
+<input type="text" @bind-value="surfBoard.Boardtype" />
+<input type="number" @bind-value="surfBoard.Price" />
+<input type="text" @bind-value="surfBoard.Equipment" />
+
+<button class="btn btn-primary" @onclick="Create"> Opret </button>
+
+
+@code {
+    public SurfBoard surfBoard = new SurfBoard();
+
+    private async Task Create()
+    {
+        var response = await Http.PostAsJsonAsync("/api/surfboard", surfBoard);
+
+        if (response.IsSuccessStatusCode)
+        {
+            navManager.NavigateTo("/surfboard");
+        }
+
+    }
+
+}

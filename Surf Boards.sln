@@ -9,11 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surf Boards API", "Surf Boa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surf Boards Blazor", "Surf Boards Blazor\Surf Boards Blazor.csproj", "{74A30297-C3B6-428E-999C-8E5B2346093C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor.Server", "Blazor\Server\Blazor.Server.csproj", "{0BFF82A1-D822-4437-B0C4-51CB3F63380F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Server", "Blazor\Server\Blazor.Server.csproj", "{0BFF82A1-D822-4437-B0C4-51CB3F63380F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor.Client", "Blazor\Client\Blazor.Client.csproj", "{8633E148-5F99-4E66-8EDE-F648639BF233}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Client", "Blazor\Client\Blazor.Client.csproj", "{8633E148-5F99-4E66-8EDE-F648639BF233}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor.Shared", "Blazor\Shared\Blazor.Shared.csproj", "{53E3D9BE-3EA6-41C2-A1C1-FCB322D390C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Shared", "Blazor\Shared\Blazor.Shared.csproj", "{53E3D9BE-3EA6-41C2-A1C1-FCB322D390C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

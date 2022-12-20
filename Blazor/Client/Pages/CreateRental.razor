@@ -1,0 +1,45 @@
+﻿@page "/createrental/{Id:guid}"
+@using Blazor.Shared;
+@inject HttpClient Http;
+@inject NavigationManager navManager
+
+
+<h3>CreateRental</h3>
+
+
+<div>
+    <dl class="row">
+        <dd>@Id</dd>
+        <input type="guid" @bind-value="rental.SurfboardId"/>
+        <input type="date" @bind-value="rental.RentalDate"/>
+        
+      <dd>
+          <button class="btn btn-primary" @onclick="() => Create()">opret</button>
+      </dd>
+    </dl>
+</div>
+
+
+
+
+
+
+@code {
+    [Parameter]
+    public Guid Id { get; set; }
+
+    public Rental rental;
+
+    private async Task Create()
+    {
+
+        //rental = new Rental();
+        var response = await Http.PostAsJsonAsync("api/rental", rental);
+        if (response.IsSuccessStatusCode)
+        {
+            navManager.NavigateTo($"/rentals");
+        }
+    }
+
+
+}

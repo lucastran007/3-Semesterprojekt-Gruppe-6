@@ -1,5 +1,7 @@
-﻿@page "/surfboards"
+﻿@page "/surfboard"
 @inject HttpClient Http
+@inject NavigationManager navManager
+@using Blazor.Shared
 
 <PageTitle>Surfboards</PageTitle>
 
@@ -13,6 +15,7 @@
 }
 else
 {
+    <button class="btn btn-primary" @onclick="CreateSurfBoard">Opret nyt baord</button>
     <table class="table">
         <thead>
             <tr>
@@ -28,8 +31,11 @@ else
                 <tr>
                     <td>@surfboard.Id</td>
                     <td>@surfboard.BoardName</td>
-                    <td>@surfboard.BoardType</td>
+                    <td>@surfboard.Boardtype</td>
                     <td>@surfboard.Price</td>
+                    <td>
+                        <button class="btn btn-primary" @onclick="() => Details(surfboard.Id)">Details</button>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -37,18 +43,20 @@ else
 }
 
 @code {
-    private Surfboard[]? surfboards;
+    private SurfBoard[]? surfboards;
 
     protected override async Task OnInitializedAsync()
     {
-        surfboards = await Http.GetFromJsonAsync<Surfboard[]>("api/surfboard");
+        surfboards = await Http.GetFromJsonAsync<SurfBoard[]>("api/surfboard");
     }
 
-    public class Surfboard
-    {
-        public Guid Id { get; set; }
-        public string BoardName { get; set; }
-        public string BoardType { get; set; }
-        public double Price { get; set; }
+    private void Details(Guid Id){
+        navManager.NavigateTo($"/surfboard/{Id}");
     }
+
+    private void CreateSurfBoard()
+    {
+        navManager.NavigateTo("/surfboard/create");
+    }
+
 }

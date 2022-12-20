@@ -1,4 +1,5 @@
 ﻿using Blazor.Server.Data;
+using Blazor.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,21 +20,30 @@ namespace Blazor.Server.Controllers
 
         // GET ALL SURFBOARDS
         [HttpGet]
-        public async Task<ActionResult> GetAllSurfBoards()
+        public ActionResult<List<SurfBoard>> GetAllSurfBoards()
         {
-            var surfboards = await _context.SurfBoard.ToArrayAsync();
-            return Ok(surfboards);
+            //var surfboards = await _context.SurfBoard.ToArrayAsync();
+            return _context.SurfBoard.ToList();
         }
 
         // GET SURFBOARD BY GUID
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetSurfBoard(Guid id)
+        public async Task<ActionResult<SurfBoard>> GetSurfBoard(Guid id)
         {
             var surfboard = await _context.SurfBoard.FindAsync(id);
             if (surfboard == null)
                 return NotFound();
 
-            return Ok(surfboard);
+            return surfboard;
+        }
+
+        //Create new surfboard (post it to the server)
+        [HttpPost]
+        public ActionResult<SurfBoard> CreateSurfBoard(SurfBoard surfBoard)
+        {
+            _context.SurfBoard.Add(surfBoard);
+            _context.SaveChanges();
+            return Ok();
         }
     }
 }

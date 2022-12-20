@@ -37,5 +37,24 @@ namespace Blazor.Server.Controllers
                 return Ok(new List<Rental>());
             }
         }
+
+        // Get rental by GUID Id
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetRental(Guid id)
+        {
+            var rental = await _context.Rental.FindAsync(id);
+            if (rental == null)
+                return NotFound();
+            return Ok(rental);
+        }
+
+        [HttpPost]
+        public ActionResult<Rental> CreateRental(Rental rental)
+        {
+            _context.Rental.Add(rental);
+            _context.SaveChanges();
+
+            return CreatedAtAction(nameof(GetRental), new { id=rental.RentalId}, rental);
+        }
     }
 }

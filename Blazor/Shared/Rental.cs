@@ -28,7 +28,7 @@ namespace Blazor.Shared
         public string? UserId { get; set; }
 
         [Required]
-        public string UserIp { get; set; }
+        public string UserIp { get; set; } = "123.123.123.123";
 
         
         [DataType(DataType.Date)]

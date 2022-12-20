@@ -1,5 +1,6 @@
 ﻿@page "/rentals"
 @inject HttpClient Http
+@using Blazor.Shared
 
 
 <PageTitle>Rentals</PageTitle>
@@ -49,14 +50,6 @@ else
        
     }
 
-    public class Rental
-    {
-        public Guid RentalId { get; set; }
-        public Guid SurfboardId { get; set; }
-        public string UserId { get; set; }
-        public DateTime RentalDate { get; set; }
-    
-    }
 
 }
 

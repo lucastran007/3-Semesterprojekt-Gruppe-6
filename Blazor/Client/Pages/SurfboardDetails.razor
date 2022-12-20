@@ -1,0 +1,94 @@
+﻿@page "/surfboard/{Id:guid}"
+@using Blazor.Shared;
+@inject HttpClient http;
+@inject NavigationManager navManager;
+
+
+<h3>SurfboardDetails</h3>
+
+@if (surfboard == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+  <div>
+    <h4>SurfBoard</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+        BoardName
+        </dt>
+        <dd class = "col-sm-10">
+        @surfboard.BoardName
+        </dd>
+        <dt class = "col-sm-2">
+            Length
+        </dt>
+        <dd class = "col-sm-10">
+            @surfboard.Length
+        </dd>
+        <dt class = "col-sm-2">
+            Width
+        </dt>
+        <dd class = "col-sm-10">
+            @surfboard.Width
+        </dd>
+        <dt class = "col-sm-2">
+            Thickness
+        </dt>
+        <dd class = "col-sm-10">
+            @surfboard.Thickness
+        </dd>
+        <dt class = "col-sm-2">
+            Volume
+        </dt>
+        <dd class = "col-sm-10">
+            @surfboard.Volume
+        </dd>
+        <dt class = "col-sm-2">
+           Boardtype
+        </dt>
+        <dd class = "col-sm-10">
+            @surfboard.Boardtype
+        </dd>
+        <dt class = "col-sm-2">
+            Price
+        </dt>
+        <dd class = "col-sm-10">
+            @surfboard.Price
+        </dd>
+        <dt class = "col-sm-2">
+       Equipment
+        </dt>
+        <dd class = "col-sm-10">
+            @surfboard.Equipment
+        </dd>
+        <dd>
+            <button class="btn btn-primary" @onclick="() => Rent(surfboard.Id)">Lej</button>
+        </dd> 
+
+    </dl>
+</div>
+}
+
+
+
+@code {
+    [Parameter]
+    public Guid Id { get; set; }
+
+    private SurfBoard? surfboard;
+
+    protected async override Task OnInitializedAsync()
+    {
+
+        surfboard = await http.GetFromJsonAsync<SurfBoard>($"api/surfboard/{Id}");
+    }
+
+    private void Rent(Guid Id)
+    {
+        navManager.NavigateTo($"/createrental/{Id}");
+    }
+
+}

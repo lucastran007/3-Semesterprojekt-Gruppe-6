@@ -16,7 +16,7 @@ namespace Blazor.Shared
         public Guid Id { get; set; }
 
         [Timestamp]
-        public byte[] RowVersion { get; set; }
+        public byte[]? RowVersion { get; set; }
 
         [Column]
         [Required(ErrorMessage = "Feltet er ikke udfyldt")]
@@ -49,14 +49,14 @@ namespace Blazor.Shared
 
 
         [DisplayName("Udstyr")]
-        public string Equipment { get; set; }
+        public string? Equipment { get; set; }
 
         [Column(TypeName = "nvarchar (100)")]
         [DisplayName("Billede navn")]
-        public string ImageName { get; set; }
+        public string? ImageName { get; set; }
 
         [NotMapped]
         [DisplayName("Tilføj billede")]
-        public IFormFile ImageFile { get; set; }
+        public IFormFile? ImageFile { get; set; }
     }
 }
