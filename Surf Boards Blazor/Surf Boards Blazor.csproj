@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="..\..\..\..\..\..\..\Program Files\dotnet\sdk\6.0.400\Sdks\Microsoft.NET.Sdk.Razor\targets\Microsoft.NET.Sdk.Razor.JSModules.targets" Link="Microsoft.NET.Sdk.Razor.JSModules.targets" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.8" PrivateAssets="all" />
   </ItemGroup>

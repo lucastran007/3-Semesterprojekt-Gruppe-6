@@ -13,13 +13,13 @@ namespace Blazor.Shared
         [Key]
         public Guid RentalId { get; set; }
 
-        public string RentalName { get; set; }
+        public string? RentalName { get; set; }
 
         [AllowNull]
         public string? RentalPhone { get; set; }
 
         [Timestamp]
-        public byte[] RowVersion { get; set; }
+        public byte[]? RowVersion { get; set; }
 
         [Required]
         public Guid SurfboardId { get; set; }
@@ -28,26 +28,26 @@ namespace Blazor.Shared
         public string? UserId { get; set; }
 
         [Required]
-        public string UserIp { get; set; } = "123.123.123.123";
+        public string? UserIp { get; set; } = "123.123.123.123";
 
         
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime RentalDate { get; set; }
 
-        public SurfBoard Surfboard { get; set; }
+        public SurfBoard? Surfboard { get; set; }
         //public Appli User { get; set; }
 
 
-        public Rental(Guid rentalId, string rentalName, string rentalPhone, DateTime rentalDate, Guid surfboardId, string userId, string userIp)
-        {
-            RentalId = rentalId;
-            RentalName = rentalName;
-            RentalPhone = rentalPhone;
-            RentalDate = rentalDate;
-            SurfboardId = surfboardId;
-            UserId = userId;
-            UserIp = userIp;
-        }
+        //public Rental(Guid rentalId, string rentalName, string rentalPhone, DateTime rentalDate, Guid surfboardId, string userId, string userIp)
+        //{
+        //    RentalId = rentalId;
+        //    RentalName = rentalName;
+        //    RentalPhone = rentalPhone;
+        //    RentalDate = rentalDate;
+        //    SurfboardId = surfboardId;
+        //    UserId = userId;
+        //    UserIp = userIp;
+        //}
     }
 }

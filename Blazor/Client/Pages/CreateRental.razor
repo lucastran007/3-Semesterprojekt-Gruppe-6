@@ -9,7 +9,7 @@
 
 <div>
     <dl class="row">
-        <dd>@Id</dd>
+      @*  <dd>@Id</dd>*@
         <input type="guid" @bind-value="rental.SurfboardId"/>
         <input type="date" @bind-value="rental.RentalDate"/>
         
@@ -28,12 +28,12 @@
     [Parameter]
     public Guid Id { get; set; }
 
-    public Rental rental;
+    public Rental rental = new Rental();
+ 
 
     private async Task Create()
     {
 
-        //rental = new Rental();
         var response = await Http.PostAsJsonAsync("api/rental", rental);
         if (response.IsSuccessStatusCode)
         {
