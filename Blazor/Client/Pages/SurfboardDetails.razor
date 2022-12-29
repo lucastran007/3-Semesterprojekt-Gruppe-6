@@ -67,7 +67,9 @@ else
         <dd>
             <button class="btn btn-primary" @onclick="() => Rent(surfboard.Id)">Lej</button>
         </dd> 
-
+        <dd>
+                <button class="btn btn-primary" @onclick="() => Delete(surfboard.Id)">Delete</button>
+        </dd> 
     </dl>
 </div>
 }
@@ -89,6 +91,17 @@ else
     private void Rent(Guid Id)
     {
         navManager.NavigateTo($"/createrental/{Id}");
+    }
+
+
+    private async Task Delete(Guid id)
+    {
+        var response = await http.DeleteAsync($"/api/surfboard/{id}");
+
+        if (response.IsSuccessStatusCode)
+        {
+            navManager.NavigateTo("/surfboard");
+        }
     }
 
 }
