@@ -56,5 +56,15 @@ namespace Blazor.Server.Controllers
 
             return CreatedAtAction(nameof(GetRental), new { id=rental.RentalId}, rental);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteRental(Guid id)
+        {
+            var rental = await _context.Rental.FindAsync(id);
+            _context.Rental.Remove(rental);
+            _context.SaveChanges();
+            return Ok();
+        }
+
     }
 }

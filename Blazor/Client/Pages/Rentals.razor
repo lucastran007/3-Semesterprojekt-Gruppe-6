@@ -1,5 +1,6 @@
 ﻿@page "/rentals"
-@inject HttpClient Http
+@inject HttpClient http
+@inject NavigationManager navManager
 @using Blazor.Shared
 
 
@@ -32,7 +33,7 @@ else
                     <td>@rental.SurfboardId</td>
                     <td>@rental.UserId</td>
                     <td>@rental.RentalDate</td>
-                    
+                    <button class="alert-danger" @onclick="()=>Delete(rental.RentalId)"> Delete </button>
                 </tr>
             }
             
@@ -43,13 +44,24 @@ else
 @code 
 {
     private Rental[]? rentals;
-  
+
     protected override async Task OnInitializedAsync()
     {
-        rentals = await Http.GetFromJsonAsync<Rental[]>("api/rental"); 
-       
+        rentals = await http.GetFromJsonAsync<Rental[]>("api/rental"); 
+
     }
 
 
+    private async Task Delete(Guid id)
+    {
+        var response = await http.DeleteAsync($"/api/rental/{id}");
+
+        if (response.IsSuccessStatusCode)
+        {
+            navManager.NavigateTo("/rentals", true);
+        }
+    }
+
+ 
 }
 
