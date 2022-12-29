@@ -43,8 +43,8 @@ namespace Blazor.Server.Controllers
         public async Task<IActionResult> GetRental(Guid id)
         {
             var rental = await _context.Rental.FindAsync(id);
-            if (rental == null)
-                return NotFound();
+            if (rental == null) return NotFound();
+            
             return Ok(rental);
         }
 

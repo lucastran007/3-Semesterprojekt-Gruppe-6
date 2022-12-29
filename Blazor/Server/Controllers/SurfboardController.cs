@@ -31,8 +31,7 @@ namespace Blazor.Server.Controllers
         public async Task<ActionResult<SurfBoard>> GetSurfBoard(Guid id)
         {
             var surfboard = await _context.SurfBoard.FindAsync(id);
-            if (surfboard == null)
-                return NotFound();
+            if (surfboard == null) return NotFound();
 
             return surfboard;
         }
@@ -52,6 +51,8 @@ namespace Blazor.Server.Controllers
         public async Task<ActionResult> DeleteSurfboard(Guid id)
         {
             var surfBoard = await _context.SurfBoard.FindAsync(id);
+            if (surfBoard == null) return NotFound();
+
             _context.SurfBoard.Remove(surfBoard);
             _context.SaveChanges();
             return Ok();
