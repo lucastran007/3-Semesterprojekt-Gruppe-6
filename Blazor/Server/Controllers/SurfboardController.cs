@@ -45,5 +45,17 @@ namespace Blazor.Server.Controllers
             _context.SaveChanges();
             return Ok();
         }
+
+
+        //Delete a surfboard
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteSurfboard(Guid id)
+        {
+            var surfBoard = await _context.SurfBoard.FindAsync(id);
+            _context.SurfBoard.Remove(surfBoard);
+            _context.SaveChanges();
+            return Ok();
+        }
+            
     }
 }

@@ -9,13 +9,18 @@
 
 <div>
     <dl class="row">
-      @*  <dd>@Id</dd>*@
-        <input type="guid" @bind-value="rental.SurfboardId"/>
-        <input type="date" @bind-value="rental.RentalDate"/>
-        
-      <dd>
+        <dt>
+            @Id
+        </dt>
+        <dt>
+            Lejedato
+        </dt>
+        <dd>
+            <input type="date" @bind-value="rental.RentalDate"/>
+        </dd>
+        <dd>
           <button class="btn btn-primary" @onclick="() => Create()">opret</button>
-      </dd>
+        </dd>
     </dl>
 </div>
 
@@ -29,11 +34,10 @@
     public Guid Id { get; set; }
 
     public Rental rental = new Rental();
- 
 
     private async Task Create()
     {
-
+        rental.SurfboardId = Id;
         var response = await Http.PostAsJsonAsync("api/rental", rental);
         if (response.IsSuccessStatusCode)
         {
