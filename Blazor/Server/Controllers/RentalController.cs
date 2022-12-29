@@ -1,5 +1,5 @@
 ﻿using Blazor.Server.Data;
-using Blazor.Server.Models;
+using Blazor.Shared.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Blazor.Shared;

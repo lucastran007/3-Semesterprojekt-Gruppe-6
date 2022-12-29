@@ -1,4 +1,34 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿<MudNavMenu>
+    <MudNavLink Href="/home" Icon="@Icons.Material.Outlined.Home">
+        Home
+    </MudNavLink>
+    <MudNavLink Href="/surfboard" Icon="@Icons.Material.Outlined.Dashboard">
+        Surfboards
+    </MudNavLink>
+    <MudNavLink Href="/rentals" Icon="@Icons.Material.Outlined.CleanHands">
+        Rentals
+    </MudNavLink>
+    <MudNavLink Href="/weatherforecasts" Icon="@Icons.Material.Outlined.WbSunny">
+        Weather
+    </MudNavLink>
+    <MudNavLink Href="/chat" Icon="@Icons.Material.Outlined.Chat">
+        Chat
+    </MudNavLink>
+
+    @*<MudNavLink Href="/chat" Icon="@Icons.Material.Outlined.Dashboard">
+        Chat
+    </MudNavLink>
+    <MudNavLink Href="https://codewithmukesh.com/blog/realtime-chat-application-with-blazor/" Target="_blank" Icon="@Icons.Material.Outlined.QuestionAnswer">
+        Documentation / Guide
+    </MudNavLink>*@
+</MudNavMenu>
+
+
+@*
+    ORIGINAL NAV BAR
+
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">Blazor</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -29,6 +59,11 @@
                 <span class="oi oi-list-rich" aria-hidden="true"></span> Weatherforecast
             </NavLink>
         </div>
+                <div class="nav-item px-3">
+            <NavLink class="nav-link" href="chat">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Chat
+            </NavLink>
+        </div>
     </nav>
 </div>
 
@@ -41,4 +76,4 @@
     {
         collapseNavMenu = !collapseNavMenu;
     }
-}
+}*@
