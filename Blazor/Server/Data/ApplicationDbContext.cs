@@ -13,6 +13,8 @@ namespace Blazor.Server.Data
         {
         }
 
+        public DbSet<ApplicationUser> applicationUsers { get; set; } = default;
+
         public DbSet<SurfBoard> SurfBoard { get; set; }
         public DbSet<Rental> Rental { get; set; }
     }
