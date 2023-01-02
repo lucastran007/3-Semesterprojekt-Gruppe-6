@@ -1,0 +1,67 @@
+﻿@page "/rentals"
+@inject HttpClient http
+@inject NavigationManager navManager
+@using Blazor.Shared
+
+
+<PageTitle>Rentals</PageTitle>
+
+<h1>Current rentals</h1>
+
+<p>Nuværende udlejninger af surfboards.</p>
+
+@if (rentals == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>RentalId</th>
+                <th>SurfboardId</th>
+                <th>UserId</th>
+                <th>RentalDate</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var rental in rentals)
+            {
+                <tr>
+                    <td>@rental.RentalId</td>
+                    <td>@rental.SurfboardId</td>
+                    <td>@rental.UserId</td>
+                    <td>@rental.RentalDate</td>
+                    <button class="alert-danger" @onclick="()=>Delete(rental.RentalId)"> Delete </button>
+                </tr>
+            }
+            
+        </tbody>
+    </table>
+}
+
+@code 
+{
+    private Rental[]? rentals;
+
+    protected override async Task OnInitializedAsync()
+    {
+        rentals = await http.GetFromJsonAsync<Rental[]>("api/rental"); 
+
+    }
+
+
+    private async Task Delete(Guid id)
+    {
+        var response = await http.DeleteAsync($"/api/rental/{id}");
+
+        if (response.IsSuccessStatusCode)
+        {
+            navManager.NavigateTo("/rentals", true);
+        }
+    }
+
+ 
+}
+

@@ -1,0 +1,79 @@
+﻿@page "/surfboard/create"
+@using Blazor.Shared
+@inject HttpClient Http
+@inject NavigationManager navManager
+
+
+<h3>CreateSurfBoard</h3>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            Boardnavn
+        </dt>
+        <dd class="col-sm-10">
+            <input type="text" @bind-value="surfBoard.BoardName" />
+        </dd>
+        <dt class="col-sm-2">
+            Længde
+        </dt>
+        <dd class="col-sm-10">
+            <input type="number" @bind-value="surfBoard.Length" />
+        </dd>
+        <dt class="col-sm-2">
+            Bredde
+        </dt>
+        <dd class="col-sm-10">
+            <input type="number" @bind-value="surfBoard.Width" />
+        </dd>
+        <dt class="col-sm-2">
+            Tytkkelse
+        </dt>
+        <dd class="col-sm-10">
+            <input type="number" @bind-value="surfBoard.Thickness" />
+        </dd>
+        <dt class="col-sm-2">
+            Volume
+        </dt>
+        <dd class="col-sm-10">
+            <input type="number" @bind-value="surfBoard.Volume" />
+        </dd>
+        <dt class="col-sm-2">
+            Boardtype
+        </dt>
+        <dd class="col-sm-10">
+            <input type="text" @bind-value="surfBoard.Boardtype" />
+        </dd>
+        <dt class="col-sm-2">
+            Pris
+        </dt>
+        <dd class="col-sm-10">
+            <input type="number" @bind-value="surfBoard.Price" />
+        </dd>
+        <dt class="col-sm-2">
+            Udstry
+        </dt>
+        <dd class="col-sm-10">
+            <input type="text" @bind-value="surfBoard.Equipment" />
+        </dd>
+    </dl>
+</div>
+
+<button class="btn btn-primary" @onclick="Create"> Opret </button>
+
+
+@code {
+    public SurfBoard surfBoard = new SurfBoard();
+
+    private async Task Create()
+    {
+        var response = await Http.PostAsJsonAsync("/api/surfboard", surfBoard);
+
+        if (response.IsSuccessStatusCode)
+        {
+            navManager.NavigateTo("/surfboard");
+        }
+
+    }
+
+}

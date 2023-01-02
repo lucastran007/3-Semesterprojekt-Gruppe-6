@@ -1,0 +1,129 @@
+﻿@page "/weatherforecasts"
+@inject HttpClient Http
+@using System.Text.Json
+@using System.Text.Json.Serialization;
+
+<PageTitle>Weather forecast</PageTitle>
+
+<h1>Weather forecast</h1>
+
+<p>Vejr-udsigten for Odense</p>
+
+<label>
+    <h3>Antal dage for vejrudsigt</h3>
+    <input type="text" @bind="Days" @bind:event="oninput" @onkeyup="@PerformSearch" />
+</label>
+
+@if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>time</th>
+                <th>Temp</th>
+                <th>Chance for rain</th>
+                <th>Rain amount</th>
+                <th>Description</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in forecasts.data)
+            {
+                <tr>
+                    <td>@forecast.datetime</td>
+                    <td>@forecast.temp</td>
+                    <td>@forecast.pop</td>
+                    <td>@forecast.precip</td>
+                    <td>@forecast.weather.description</td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+}
+
+@code {
+    private Root? forecasts;
+    private string Days = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        var json = await Http.GetStringAsync($"https://api.weatherbit.io/v2.0/forecast/daily?lat=55.39&lon=10.38&days=7&key=dcfd41b5500b480f98dd74b83df8eeb2");
+        forecasts = JsonSerializer.Deserialize<Root>(json);
+    }
+
+    public async Task PerformSearch()
+    {
+        var json = await Http.GetStringAsync($"https://api.weatherbit.io/v2.0/forecast/daily?lat=55.39&lon=10.38&days={Days}&key=dcfd41b5500b480f98dd74b83df8eeb2");
+        forecasts = JsonSerializer.Deserialize<Root>(json);
+    }
+
+
+    // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
+    public class Datum
+    {
+        public double app_max_temp { get; set; }
+        public double app_min_temp { get; set; }
+        public int clouds { get; set; }
+        public int clouds_hi { get; set; }
+        public int clouds_low { get; set; }
+        public int clouds_mid { get; set; }
+        public string datetime { get; set; }
+        public double dewpt { get; set; }
+        public double high_temp { get; set; }
+        public double low_temp { get; set; }
+        public object max_dhi { get; set; }
+        public double max_temp { get; set; }
+        public double min_temp { get; set; }
+        public double moon_phase { get; set; }
+        public double moon_phase_lunation { get; set; }
+        public int moonrise_ts { get; set; }
+        public int moonset_ts { get; set; }
+        public double ozone { get; set; }
+        public int pop { get; set; }
+        public double precip { get; set; }
+        public double pres { get; set; }
+        public int rh { get; set; }
+        public double slp { get; set; }
+        public double snow { get; set; }
+        public double snow_depth { get; set; }
+        public int sunrise_ts { get; set; }
+        public int sunset_ts { get; set; }
+        public double temp { get; set; }
+        public int ts { get; set; }
+        public double uv { get; set; }
+        public string valid_date { get; set; }
+        public double vis { get; set; }
+        public Weather weather { get; set; }
+        public string wind_cdir { get; set; }
+        public string wind_cdir_full { get; set; }
+        public int wind_dir { get; set; }
+        public double wind_gust_spd { get; set; }
+        public double wind_spd { get; set; }
+    }
+
+    public class Root
+    {
+        public string city_name { get; set; }
+        public string country_code { get; set; }
+        public List<Datum> data { get; set; }
+        public double lat { get; set; }
+        public double lon { get; set; }
+        public string state_code { get; set; }
+        public string timezone { get; set; }
+    }
+
+    public class Weather
+    {
+        public string description { get; set; }
+        public int code { get; set; }
+        public string icon { get; set; }
+    }
+
+}

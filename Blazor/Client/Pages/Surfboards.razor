@@ -1,0 +1,77 @@
+﻿@page "/surfboard"
+@inject HttpClient Http
+@inject NavigationManager navManager
+@inject IModalService modal
+@using Blazor.Shared
+
+<PageTitle>Surfboards</PageTitle>
+
+<h1>Current surfboards</h1>
+
+<p>Liste over surfboards der kan lejes.</p>
+
+@if (surfboards == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <button class="btn btn-primary" @onclick="CreateSurfBoard">Opret nyt surfboard</button>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Boardname</th>
+                <th>BoardType</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var surfboard in surfboards)
+            {
+                <tr>
+                    <td>@surfboard.Id</td>
+                    <td>@surfboard.BoardName</td>
+                    <td>@surfboard.Boardtype</td>
+                    <td>@surfboard.Price</td>
+                    <td>
+                        <button class="btn btn-primary" @onclick="() => Details(surfboard.Id)">Details</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private SurfBoard[]? surfboards;
+
+    [CascadingParameter] IModalService Modal { get; set; } = default;
+
+    protected override async Task OnInitializedAsync()
+    {
+        surfboards = await Http.GetFromJsonAsync<SurfBoard[]>("api/surfboard");
+    }
+
+    private async Task Details(Guid Id)
+    {
+        var options = new ModalOptions()
+            {
+              
+                HideHeader = true
+
+            };
+
+        var IdParamter = new ModalParameters();
+        IdParamter.Add(nameof(SurfboardDetails.Id), Id);
+        Modal.Show<SurfboardDetails>($"{Id}", IdParamter, options);
+        //navManager.NavigateTo($"/surfboard/{Id}");
+        
+    }
+
+    private void CreateSurfBoard()
+    {
+        navManager.NavigateTo("/surfboard/create");
+    }
+
+}
