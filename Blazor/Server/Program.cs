@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Blazor.Server.Data.Seeders;
+using Blazor.Server.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +39,11 @@ builder.Services.AddAuthentication()
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Services.AddSignalR();
+builder.Services.AddResponseCompression(opts =>
+{
+    opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[] { "application/octet-stream"});
+});
 
 var app = builder.Build();
 
@@ -74,6 +80,7 @@ app.UseAuthorization();
 
 
 app.MapRazorPages();
+app.MapHub<ChatHub>("/chathub");
 app.MapControllers();
 app.MapFallbackToFile("index.html");
 
