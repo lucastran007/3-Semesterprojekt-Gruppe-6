@@ -18,7 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LOGIN_INFO", "LOGIN_INFO", 
 		Admin login.txt = Admin login.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatProofOfConcept", "ChatProofOfConcept\ChatProofOfConcept.csproj", "{B3E97F0A-49F1-4E5D-9887-6CCBA156455E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatProofOfConcept", "ChatProofOfConcept\ChatProofOfConcept.csproj", "{B3E97F0A-49F1-4E5D-9887-6CCBA156455E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
