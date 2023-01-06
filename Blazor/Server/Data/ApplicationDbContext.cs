@@ -11,6 +11,8 @@ namespace Blazor.Server.Data
     {
         public ApplicationDbContext(DbContextOptions options, IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions){}
 
+        public DbSet<ApplicationUser> applicationUsers { get; set; } = default;
+
         public DbSet<SurfBoard> SurfBoard { get; set; }
         public DbSet<Rental> Rental { get; set; }
 

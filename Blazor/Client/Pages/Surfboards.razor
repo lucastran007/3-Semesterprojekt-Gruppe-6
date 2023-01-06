@@ -45,13 +45,27 @@ else
 @code {
     private SurfBoard[]? surfboards;
 
+    [CascadingParameter] IModalService Modal { get; set; } = default;
+
     protected override async Task OnInitializedAsync()
     {
         surfboards = await Http.GetFromJsonAsync<SurfBoard[]>("api/surfboard");
     }
 
-    private void Details(Guid Id){
-        navManager.NavigateTo($"/surfboard/{Id}");
+    private async Task Details(Guid Id)
+    {
+        var options = new ModalOptions()
+            {
+                Size = ModalSize.Automatic,
+                HideHeader = true
+
+            };
+
+        var IdParamter = new ModalParameters();
+        IdParamter.Add(nameof(SurfboardDetails.Id), Id);
+        Modal.Show<SurfboardDetails>($"{Id}", IdParamter, options);
+        //navManager.NavigateTo($"/surfboard/{Id}");
+        
     }
 
     private void CreateSurfBoard()
